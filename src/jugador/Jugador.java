@@ -3,6 +3,10 @@ package jugador;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
+
+import comida.Comida;
+import pared.Pared;
+
 import java.util.ArrayList;
 
 import ventana.Ventana;
@@ -23,17 +27,20 @@ public class Jugador {
         this.dx = 0;
         this.dy = 0;
     }
-
+     //duende
     public void dibujar(Graphics g) {
         g.setColor(Color.RED);
         g.fillRect(this.x, this.y, this.ANCHO, this.ALTO);
+
+       
+        
+
+
     }
 
     public void actualizar() {
        this.x += this.dx;
        this.y += this.dy;
-
-       //
     }
 
     public void presionalTecla(char tecla) {
@@ -74,6 +81,20 @@ public class Jugador {
                 break;
         }
 
+    }
+
+    public boolean detectarColisionPared(Pared pared) {
+        return this.x < pared.getX() + pared.getAncho() &&
+                this.x  + this.ANCHO > pared.getX() &&
+                this.y < pared.getY() + this.ALTO &&
+                this.y + this.ANCHO > pared.getY();
+    }
+
+    public boolean detectarColisionComida(Comida comida) {
+        return this.x < comida.getX() + comida.getAncho() &&
+                this.x  + this.ANCHO > comida.getX() &&
+                this.y < comida.getY() + this.ALTO &&
+                this.y + this.ANCHO > comida.getY();
     }
 
 }
