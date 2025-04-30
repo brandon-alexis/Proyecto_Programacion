@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 import app.Juego;
 
 public class Ventana extends JFrame {
-    public static final int CANTIDAD_FILAS = 21;
-    public static final int CANTIDAD_COLUMNAS = 19;
+    public static final int CANTIDAD_FILAS = 22;
+    public static final int CANTIDAD_COLUMNAS = 22;
     public static final int TAMAÑO_BLOQUE = 32;
     public static final int ANCHO = CANTIDAD_COLUMNAS * TAMAÑO_BLOQUE;
     public static final int ALTO = CANTIDAD_FILAS * TAMAÑO_BLOQUE;
@@ -24,5 +24,6 @@ public class Ventana extends JFrame {
         this.juego = new Juego();
         this.add(juego);
         this.pack();
+        juego.requestFocus();
    }
 }
