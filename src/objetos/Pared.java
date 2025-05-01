@@ -1,4 +1,5 @@
-package pared;
+package objetos;
+
 
 import java.awt.Color;
 import java.awt.Graphics;

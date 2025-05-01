@@ -1,8 +1,9 @@
-package comida;
+package objetos;
+
 
 import java.awt.Graphics;
 
-import ventana.Ventana;
+import graficos.Ventana;
 
 import java.awt.Color;
 
