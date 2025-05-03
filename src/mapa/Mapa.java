@@ -1,7 +1,5 @@
 package mapa;
 
-
-
 import java.awt.Graphics;
 import java.util.HashSet;
 
@@ -18,30 +16,30 @@ public class Mapa {
     private static final int JUGADOR = 4;
 
     private final int[][] mapa = {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 3, 0, 0, 1},
-        {1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1},
-        {1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1},
-        {1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1},
-        {1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1},
-        {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-        {1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1},
-        {1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
-        {1, 0, 1, 0, 0, 0, 1, 3, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-        {1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-        {1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-        {1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 3, 0, 0, 0, 1, 0, 1},
-        {1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1},
-        {1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1},
-        {1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-        {1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
-        {1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+            { 1, 4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 3, 0, 0, 1 },
+            { 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1 },
+            { 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 },
+            { 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1 },
+            { 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1 },
+            { 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
+            { 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1 },
+            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+            { 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1 },
+            { 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1 },
+            { 1, 0, 1, 0, 0, 0, 1, 3, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },
+            { 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1 },
+            { 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1 },
+            { 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 3, 0, 0, 0, 1, 0, 1 },
+            { 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1 },
+            { 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1 },
+            { 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },
+            { 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1 },
+            { 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1 },
+            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
-   
+
     private HashSet<Pared> paredes;
     private HashSet<Caballero> caballeros;
     private HashSet<Comida> comidas;
@@ -52,29 +50,17 @@ public class Mapa {
         this.comidas = new HashSet<Comida>();
         this.caballeros = new HashSet<Caballero>();
         this.cargarMapa();
-    
 
-    }
-
-    public HashSet<Pared> getParedes() {
-        return paredes;
-    }
-
-    public Duende getJugador() {
-        return jugador;
-    }
-
-    public HashSet<Caballero> getCaballeros() {
-        return caballeros;
     }
 
     private void cargarMapa() {
         if (mapa.length != Ventana.CANTIDAD_FILAS || mapa[0].length != Ventana.CANTIDAD_COLUMNAS) {
-            System.out.printf("El mapa tiene una dimension de %dx%d y tiene que tener una dimension de %dx%d para ser valido",
-            mapa.length, 
-            mapa[0].length, 
-            Ventana.CANTIDAD_FILAS, 
-            Ventana.CANTIDAD_COLUMNAS);
+            System.out.printf(
+                    "El mapa tiene una dimension de %dx%d y tiene que tener una dimension de %dx%d para ser valido",
+                    mapa.length,
+                    mapa[0].length,
+                    Ventana.CANTIDAD_FILAS,
+                    Ventana.CANTIDAD_COLUMNAS);
             throw new ArrayIndexOutOfBoundsException();
         }
 
@@ -107,33 +93,36 @@ public class Mapa {
 
     public void dibujar(Graphics g) {
         for (Pared pared : paredes) {
-           pared.dibujar(g); 
+            pared.dibujar(g);
         }
 
-        for (Comida comida: comidas) {
+        for (Comida comida : comidas) {
             comida.dibujar(g);
         }
 
-        for (Caballero caballero: caballeros) {
+        for (Caballero caballero : caballeros) {
             caballero.dibujar(g);
 
-            
         }
     }
 
     public void actualizar() {
-        for (Caballero caballero: caballeros) {
-            caballero.perseguir(this.jugador.getX(), this.jugador.getY());
+        for (Caballero caballero : caballeros) {
+            caballero.perseguir(this.jugador.getX(), this.jugador.getY(), this.paredes);
 
         }
     }
 
-   
+    public HashSet<Pared> getParedes() {
+        return paredes;
     }
-    
-    
 
-    
+    public Duende getJugador() {
+        return jugador;
+    }
 
- 
+    public HashSet<Caballero> getCaballeros() {
+        return caballeros;
+    }
 
+}

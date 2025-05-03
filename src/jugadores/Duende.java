@@ -13,12 +13,13 @@ import objetos.Pared;
 public class Duende {
     public static final int ANCHO = Ventana.TAMAÑO_BLOQUE;
     public static final int ALTO = Ventana.TAMAÑO_BLOQUE;
-    public final int VELOCIDAD = 5;
+    public final int VELOCIDAD = (int)(Ventana.TAMAÑO_BLOQUE / Ventana.FRAME);
     private int x;
     private int y;
     private int velocidadX;
     private int velocidadY;
     private String direccion;
+    private String proximaDireccion;
 
     public Duende(int x, int y) {
         this.x = x;
@@ -26,6 +27,93 @@ public class Duende {
         this.velocidadX = this.VELOCIDAD;
         this.velocidadY = this.VELOCIDAD;
         this.direccion = "derecha";
+        this.proximaDireccion = "derecha";
+    }
+
+    public void dibujar(Graphics g) {
+        g.setColor(Color.RED);
+        g.fillRect(this.x, this.y, this.ANCHO, this.ALTO);
+    }
+
+    public void mover(String direccion) {
+        switch (direccion) {
+            case "izquierda":
+                this.x -= this.velocidadX;
+                break;
+            case "derecha":
+                this.x += this.velocidadX;
+                break;
+            case "arriba":
+                this.y -= this.velocidadY;
+                break;
+            case "abajo":
+                this.y += this.velocidadY;
+            default:
+                break;
+        }
+    }
+
+    public void moverAlrevez(String direccion) {
+        switch (direccion) {
+            case "izquierda":
+                this.x += this.velocidadX;
+                break;
+            case "derecha":
+                this.x -= this.velocidadX;
+                break;
+            case "arriba":
+                this.y += this.velocidadY;
+                break;
+            case "abajo":
+                this.y -= this.velocidadY;
+            default:
+                break;
+        }
+    }
+
+    public boolean detectarColisionPared(Pared pared) {
+        if (this.x < pared.getX() + pared.getAncho() && this.x + this.ANCHO > pared.getX()
+                && this.y < pared.getY() + pared.getAlto() && this.y + this.ALTO > pared.getY()) {
+
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public boolean detectarColisionCaballero(Caballero caballero) {
+        if (this.x < caballero.getX() + caballero.getAncho() && this.x + this.ANCHO > caballero.getX()
+                && this.y < caballero.getY() + caballero.getAlto() && this.y + this.ALTO > caballero.getY()) {
+
+            return true;
+        }
+
+        return false;
+
+    }
+
+    
+
+    public boolean detectarColisionComida(Comida comida) {
+        if (this.x < comida.getX() + comida.getAncho() && this.x + this.ANCHO > comida.getX()
+                && this.y < comida.getY() + comida.getAlto() && this.y + this.ALTO > comida.getY()) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public void actualizarDireccion(HashSet<Pared> paredes) {
+        mover(this.direccion);
+
+        for (Pared pared: paredes) {
+            if (this.detectarColisionPared(pared)) {
+                this.moverAlrevez(direccion);
+                break;
+            }
+        }
     }
 
     public int getX() {
@@ -64,84 +152,19 @@ public class Duende {
         return VELOCIDAD;
     }
 
-    public void dibujar(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillRect(this.x, this.y, this.ANCHO, this.ALTO);
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void actualizar(String direccion) {
-        switch (direccion) {
-            case "izquierda":
-                this.x -= this.velocidadX;
-                break;
-            case "derecha":
-                this.x += this.velocidadX;
-                break;
-            case "arriba":
-                this.y -= this.velocidadY;
-                break;
-            case "abajo":
-                this.y += this.velocidadY;
-            default:
-                break;
-        }
-
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
-    public boolean detectarColisionPared(Pared pared) {
-        if (this.x < pared.getX() + pared.getAncho() && this.x + this.ANCHO > pared.getX()
-                && this.y < pared.getY() + pared.getAlto() && this.y + this.ALTO > pared.getY()) {
-
-            return true;
-        }
-
-        return false;
-
+    public String getProximaDireccion() {
+        return proximaDireccion;
     }
 
-    public boolean detectarColisionCaballero(Caballero caballero) {
-        if (this.x < caballero.getX() + caballero.getAncho() && this.x + this.ANCHO > caballero.getX()
-                && this.y < caballero.getY() + caballero.getAlto() && this.y + this.ALTO > caballero.getY()) {
-
-            return true;
-        }
-
-        return false;
-
-    }
-
-    
-
-    public boolean detectarColisionComida(Comida comida) {
-        if (this.x == comida.getX() && this.y == comida.getY()) {
-            return true;
-
-        }
-        return false;
-
-    }
-
-    public void actualizarDireccion(String direccion) {
-        if (direccion.equals("arriba")) {
-            this.velocidadX = 0;
-            this.velocidadY = -this.VELOCIDAD;
-        } else if (direccion.equals("abajo")) {
-            this.velocidadX = 0;
-            this.velocidadY = this.VELOCIDAD;
-        } else if (direccion.equals("izquierda")) {
-            this.velocidadY = 0;
-            this.velocidadX = -this.VELOCIDAD;
-        } else if (direccion.equals("derecha")) {
-            this.velocidadY = 0;
-            this.velocidadX = this.VELOCIDAD;
-
-            this.direccion = direccion;
-
-        }
-    }
-
-    public void revertirMovimiento() {
-        this.x -= this.velocidadX;
-        this.y -= this.velocidadY;
+    public void setProximaDireccion(String proximaDireccion) {
+        this.proximaDireccion = proximaDireccion;
     }
 }

@@ -2,6 +2,7 @@ package graficos;
 
 
 import java.awt.Dimension;
+import java.awt.Frame;
 
 import javax.swing.JFrame;
 
@@ -14,6 +15,8 @@ public class Ventana extends JFrame {
     public static final int TAMAÑO_BLOQUE = 32;
     public static final int ANCHO = CANTIDAD_COLUMNAS * TAMAÑO_BLOQUE;
     public static final int ALTO = CANTIDAD_FILAS * TAMAÑO_BLOQUE;
+    public static final int FRAME = 16;
+    public static final int FPS = FRAME / 1000;
     public static final String TITULO = "Juego";
     private Juego juego;
     private Control control;
@@ -30,13 +33,8 @@ public class Ventana extends JFrame {
     this.setResizable(false);
     this.setTitle(TITULO);
     this.setLocationRelativeTo(null);
-    juego.addKeyListener(control);
     this.add(juego);
     this.pack();
-    juego.requestFocus();
-    
- 
-
-    
+    juego.requestFocus(); 
    }
 }

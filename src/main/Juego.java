@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashSet;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -25,14 +26,16 @@ public class Juego extends JPanel implements ActionListener {
     private Duende jugador;
     private Timer timer;
     private Control control;
+    private HashSet<Pared> paredes;
  
 
     public Juego() {
 
         this.mapa = new Mapa();
         this.jugador = mapa.getJugador();
+        this.paredes = mapa.getParedes();
         this.control = new Control();
-        this.timer = new Timer(30, this);
+        this.timer = new Timer(Ventana.FRAME, this);
         timer.start();
         
         this.setPreferredSize(new Dimension(Ventana.ALTO, Ventana.ANCHO));
@@ -47,32 +50,13 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     public void actualizar() {
+        String direccion = this.control.getDireccion();
+        System.out.println(direccion);
+        this.jugador.setDireccion(direccion);
         this.mapa.actualizar();
-        this.jugador.actualizar(this.control.getDireccion());
-        
-      
-        
-     
+        this.jugador.actualizarDireccion(this.paredes);
+
     
-    
-
-
-
-        // estrellar cuando el jugador toca pared
-        for (Pared pared: mapa.getParedes()) {
-            if (this.jugador.detectarColisionPared(pared)) {
-                System.out.println("colision con bloque");
-                break;               
-                
-            }
-
-        }
-        
-      
-    
-
-
-        // extrellar cuando el jugador toca caballero
         for (Caballero caballero: mapa.getCaballeros()) {
             if (this.jugador.detectarColisionCaballero(caballero)) {
                 timer.stop();
@@ -95,10 +79,4 @@ public class Juego extends JPanel implements ActionListener {
         this.actualizar();
         this.repaint();
     }
-
-    
-
-
-// dame la linea para detectar cuando el jugador toca la pared tenga que cambiar de direccion
 }
-// dame la linea para detectar cuando el jugador toca la pared tenga q  
