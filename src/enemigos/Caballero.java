@@ -3,6 +3,7 @@ package enemigos;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.util.HashSet;
 
 import graficos.Ventana;
@@ -35,16 +36,16 @@ public class Caballero {
     }
     public void manejarTeclas(int keyCode) {
         switch (keyCode) {
-            case java.awt.event.KeyEvent.VK_UP:
+            case KeyEvent.VK_UP:
                 mover(0, -Ventana.TAMAÑO_BLOQUE);
                 break;
-            case java.awt.event.KeyEvent.VK_DOWN:
+            case KeyEvent.VK_DOWN:
                 mover(0, Ventana.TAMAÑO_BLOQUE);
                 break;
-            case java.awt.event.KeyEvent.VK_LEFT:
+            case KeyEvent.VK_LEFT:
                 mover(-Ventana.TAMAÑO_BLOQUE, 0);
                 break;
-            case java.awt.event.KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_RIGHT:
                 mover(Ventana.TAMAÑO_BLOQUE, 0);
                 break;
         }
@@ -65,10 +66,10 @@ public class Caballero {
 
     public void perseguir(int jugadorX, int jugadorY, HashSet<Pared> paredes) {
         int[][] direcciones = {
-            {this.velocidadX, 0},  // derecha
-            {-this.velocidadX, 0}, // izquierda
-            {0, this.velocidadY},  // abajo
-            {0, -this.velocidadY}  // arriba
+            {this.velocidadX, 0},  
+            {-this.velocidadX, 0}, 
+            {0, this.velocidadY},  
+            {0, -this.velocidadY}
         };
     
         int mejorDX = 0;

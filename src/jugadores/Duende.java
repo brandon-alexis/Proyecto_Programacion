@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle.Control;
 
 import control.ControlJuego;
 import enemigos.Caballero;
@@ -16,7 +15,7 @@ import objetos.Pared;
 public class Duende {
     public static final int ANCHO = Ventana.TAMAÑO_BLOQUE;
     public static final int ALTO = Ventana.TAMAÑO_BLOQUE;
-    public final int VELOCIDAD = Ventana.TAMAÑO_BLOQUE / 8;
+    public final int VELOCIDAD = (int) ((Ventana.TAMAÑO_BLOQUE / Ventana.FRAME));
     private int x;
     private int y;
     private int velocidadX;
@@ -41,10 +40,49 @@ public class Duende {
     }
 
     public void mover(HashSet<Pared> paredes) {
+        boolean alineado = (this.x % ANCHO == 0 && this.y % ALTO == 0);
+
+        if (alineado) {
+            int dx = 0, dy = 0;
+            switch (this.proximaDireccion) {
+                case ControlJuego.ARRIBA:
+                    dy = -VELOCIDAD;
+                    break;
+                case ControlJuego.ABAJO:
+                    dy = VELOCIDAD;
+                    break;
+                case ControlJuego.IZQUIERDA:
+                    dx = -VELOCIDAD;
+                    break;
+                case ControlJuego.DERECHA:
+                    dx = VELOCIDAD;
+                    break;
+            }
+
+            this.x += dx;
+            this.y += dy;
+
+            boolean puedeGirar = true;
+            for (Pared pared : paredes) {
+                if (detectarColisionPared(pared)) {
+                    puedeGirar = false;
+                    break;
+                }
+            }
+
+            this.x -= dx;
+            this.y -= dy;
+
+            if (puedeGirar) {
+                this.direccion = this.proximaDireccion;
+                actualizarVelocidad();
+            }
+        }
+
         this.x += this.velocidadX;
         this.y += this.velocidadY;
 
-        for (Pared pared: paredes) {
+        for (Pared pared : paredes) {
             if (this.detectarColisionPared(pared)) {
                 this.x -= velocidadX;
                 this.y -= velocidadY;
@@ -54,19 +92,8 @@ public class Duende {
     }
 
     public void actualizarDireccion(String direccion, HashSet<Pared> paredes) {
-        this.proximaDireccion = this.direccion;
-        this.direccion = direccion;
-        actualizarVelocidad();
-        this.x += velocidadX;
-        this.y += velocidadY;
-
-        for (Pared pared: paredes) {
-            if (detectarColisionPared(pared)) {
-                this.x -= velocidadX;
-                this.y -= velocidadY;
-                this.direccion = this.proximaDireccion;
-                actualizarVelocidad();
-            }
+        if (this.direccionesValidas.contains(direccion)) {
+            this.proximaDireccion = direccion;
         }
     }
 
