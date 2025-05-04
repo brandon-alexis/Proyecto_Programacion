@@ -53,6 +53,11 @@ public class Juego extends JPanel implements ActionListener {
         this.jugador.dibujar(g);
         this.mostrarPuntaje(g);
         this.mostrarVidas(g);
+        
+        if (this.jugador.getVidas() == 0) {
+            this.mostrarMensajeGameOver(g);
+            this.detenerJuego();
+        }
     }
 
     // metodo para sumar puntaje cuando el jugador come
@@ -67,6 +72,7 @@ public class Juego extends JPanel implements ActionListener {
         this.jugador.mover(this.paredes);
         this.jugador.comer(this.comidas);
         this.mapa.actualizar();
+        
 
     
         for (Caballero caballero: mapa.getCaballeros()) {
@@ -75,9 +81,7 @@ public class Juego extends JPanel implements ActionListener {
             }
         }
 
-        if (this.jugador.getVidas() == 0) {
-            this.detenerJuego();
-        }
+       
 
         this.repaint();
     }
@@ -110,5 +114,18 @@ public class Juego extends JPanel implements ActionListener {
     public void detenerJuego() {
         this.timer.stop();
     }
+
+    //mostrar mensaje game over en medio de la pantalla cuando se detenga el juego cuando pierda todas las vidas
+    public void mostrarMensajeGameOver(Graphics g) {
+        if (this.jugador.getVidas() == 0) {
+            g.setFont(g.getFont().deriveFont(80f));
+            g.setColor(Color.red);
+           
+            g.drawString("GAME OVER", Ventana.ANCHO / 2 - 250, Ventana.ALTO / 2);
+            
+
+        }
+    }
+    
 
 }
