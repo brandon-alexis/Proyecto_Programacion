@@ -18,9 +18,9 @@ public class Pared {
     }
     
     public void dibujar(Graphics g) {
-        g.setColor(Color.BLUE);
+        g.setColor(Color.GRAY);
         g.fillRect(this.x, this.y, this.ancho, this.alto);
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLACK);
         g.drawRect(this.x, this.y, this.ancho, this.alto);
 
     }

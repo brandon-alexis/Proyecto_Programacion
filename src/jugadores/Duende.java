@@ -38,7 +38,7 @@ public class Duende {
     }
 
     public void dibujar(Graphics g) {
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
         g.fillRect(this.x, this.y, this.ANCHO, this.ALTO);
     }
 
