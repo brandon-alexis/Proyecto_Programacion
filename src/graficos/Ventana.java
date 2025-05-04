@@ -6,7 +6,7 @@ import java.awt.Frame;
 
 import javax.swing.JFrame;
 
-import control.Control;
+import control.ControlJuego;
 import main.Juego;
 
 public class Ventana extends JFrame {
@@ -19,11 +19,9 @@ public class Ventana extends JFrame {
     public static final int FPS = FRAME / 1000;
     public static final String TITULO = "Juego";
     private Juego juego;
-    private Control control;
     
     public Ventana() {
         this.juego = new Juego();
-        this.control = new Control();
         this.configurarVentana();
    }
 

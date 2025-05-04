@@ -3,11 +3,15 @@ package control;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Control extends KeyAdapter {
+public class ControlJuego extends KeyAdapter {
+    public static final String ARRIBA = "arriba";
+    public static final String ABAJO = "abajo";
+    public static final String IZQUIERDA = "izquierda";
+    public static final String DERECHA = "derecha";
     private String direccion;
 
-    public Control() {
-        this.direccion = "derecha";
+    public ControlJuego() {
+        this.direccion = DERECHA;
     }
 
     public String getDireccion() {
@@ -17,25 +21,22 @@ public class Control extends KeyAdapter {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-
-    //control.setDireccion()
-
     @Override
     public void keyPressed(KeyEvent e) {
         int tecla = e.getKeyCode();
 
         switch (tecla) {
             case KeyEvent.VK_LEFT:
-                this.direccion = "izquierda";
+                this.direccion = IZQUIERDA;
                 break;
             case KeyEvent.VK_RIGHT:
-                this.direccion = "derecha";
+                this.direccion = DERECHA;
                 break;
             case KeyEvent.VK_UP:
-                this.direccion = "arriba";
+                this.direccion = ARRIBA;
                 break;
             case KeyEvent.VK_DOWN:
-                this.direccion = "abajo";
+                this.direccion = ABAJO;
                 break;
             default:
                 this.direccion = "cero";

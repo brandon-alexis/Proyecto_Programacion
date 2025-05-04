@@ -2,9 +2,12 @@ package jugadores;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle.Control;
 
+import control.ControlJuego;
 import enemigos.Caballero;
 import graficos.Ventana;
 import objetos.Comida;
@@ -13,20 +16,22 @@ import objetos.Pared;
 public class Duende {
     public static final int ANCHO = Ventana.TAMAÑO_BLOQUE;
     public static final int ALTO = Ventana.TAMAÑO_BLOQUE;
-    public final int VELOCIDAD = (int)(Ventana.TAMAÑO_BLOQUE / Ventana.FRAME);
+    public final int VELOCIDAD = Ventana.TAMAÑO_BLOQUE / 8;
     private int x;
     private int y;
     private int velocidadX;
     private int velocidadY;
     private String direccion;
     private String proximaDireccion;
+    private List<String> direccionesValidas;
 
     public Duende(int x, int y) {
         this.x = x;
         this.y = y;
         this.velocidadX = this.VELOCIDAD;
         this.velocidadY = this.VELOCIDAD;
-        this.direccion = "derecha";
+        this.direccionesValidas = List.of("arriba", "abajo", "izquierda", "derecha");
+        this.direccion = ControlJuego.DERECHA;
         this.proximaDireccion = "derecha";
     }
 
@@ -35,85 +40,78 @@ public class Duende {
         g.fillRect(this.x, this.y, this.ANCHO, this.ALTO);
     }
 
-    public void mover(String direccion) {
-        switch (direccion) {
-            case "izquierda":
-                this.x -= this.velocidadX;
+    public void mover(HashSet<Pared> paredes) {
+        this.x += this.velocidadX;
+        this.y += this.velocidadY;
+
+        for (Pared pared: paredes) {
+            if (this.detectarColisionPared(pared)) {
+                this.x -= velocidadX;
+                this.y -= velocidadY;
                 break;
-            case "derecha":
-                this.x += this.velocidadX;
-                break;
-            case "arriba":
-                this.y -= this.velocidadY;
-                break;
-            case "abajo":
-                this.y += this.velocidadY;
-            default:
-                break;
+            }
         }
     }
 
-    public void moverAlrevez(String direccion) {
-        switch (direccion) {
-            case "izquierda":
-                this.x += this.velocidadX;
+    public void actualizarDireccion(String direccion, HashSet<Pared> paredes) {
+        this.proximaDireccion = this.direccion;
+        this.direccion = direccion;
+        actualizarVelocidad();
+        this.x += velocidadX;
+        this.y += velocidadY;
+
+        for (Pared pared: paredes) {
+            if (detectarColisionPared(pared)) {
+                this.x -= velocidadX;
+                this.y -= velocidadY;
+                this.direccion = this.proximaDireccion;
+                actualizarVelocidad();
+            }
+        }
+    }
+
+    public void actualizarVelocidad() {
+        switch (this.direccion) {
+            case ControlJuego.ARRIBA:
+                this.velocidadX = 0;
+                this.velocidadY = -VELOCIDAD;
                 break;
-            case "derecha":
-                this.x -= this.velocidadX;
+            case ControlJuego.ABAJO:
+                this.velocidadX = 0;
+                this.velocidadY = VELOCIDAD;
                 break;
-            case "arriba":
-                this.y += this.velocidadY;
+            case ControlJuego.IZQUIERDA:
+                this.velocidadX = -VELOCIDAD;
+                this.velocidadY = 0;
                 break;
-            case "abajo":
-                this.y -= this.velocidadY;
+            case ControlJuego.DERECHA:
+                this.velocidadX = VELOCIDAD;
+                this.velocidadY = 0;
+                break;
             default:
                 break;
         }
     }
 
     public boolean detectarColisionPared(Pared pared) {
-        if (this.x < pared.getX() + pared.getAncho() && this.x + this.ANCHO > pared.getX()
-                && this.y < pared.getY() + pared.getAlto() && this.y + this.ALTO > pared.getY()) {
-
-            return true;
-        }
-
-        return false;
-
+        return (this.x < pared.getX() + pared.getAncho()
+                && this.x + this.ANCHO > pared.getX()
+                && this.y < pared.getY() + pared.getAlto()
+                && this.y + this.ALTO > pared.getY());
     }
 
     public boolean detectarColisionCaballero(Caballero caballero) {
-        if (this.x < caballero.getX() + caballero.getAncho() && this.x + this.ANCHO > caballero.getX()
-                && this.y < caballero.getY() + caballero.getAlto() && this.y + this.ALTO > caballero.getY()) {
-
-            return true;
-        }
-
-        return false;
-
+        return (this.x < caballero.getX() + caballero.getAncho()
+                && this.x + this.ANCHO > caballero.getX()
+                && this.y < caballero.getY() + caballero.getAlto()
+                && this.y + this.ALTO > caballero.getY());
     }
-
-    
 
     public boolean detectarColisionComida(Comida comida) {
-        if (this.x < comida.getX() + comida.getAncho() && this.x + this.ANCHO > comida.getX()
-                && this.y < comida.getY() + comida.getAlto() && this.y + this.ALTO > comida.getY()) {
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public void actualizarDireccion(HashSet<Pared> paredes) {
-        mover(this.direccion);
-
-        for (Pared pared: paredes) {
-            if (this.detectarColisionPared(pared)) {
-                this.moverAlrevez(direccion);
-                break;
-            }
-        }
+        return (this.x < comida.getX() + comida.getAncho()
+                && this.x + this.ANCHO > comida.getX()
+                && this.y < comida.getY() + comida.getAlto()
+                && this.y + this.ALTO > comida.getY());
     }
 
     public int getX() {
@@ -157,7 +155,9 @@ public class Duende {
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        if (this.direccionesValidas.contains(direccion)) {
+            this.direccion = direccion;
+        }
     }
 
     public String getProximaDireccion() {
@@ -165,6 +165,8 @@ public class Duende {
     }
 
     public void setProximaDireccion(String proximaDireccion) {
-        this.proximaDireccion = proximaDireccion;
+        if (this.direccionesValidas.contains(proximaDireccion)) {
+            this.proximaDireccion = proximaDireccion;
+        }
     }
 }

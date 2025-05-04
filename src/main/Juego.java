@@ -12,7 +12,7 @@ import java.util.HashSet;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import control.Control;
+import control.ControlJuego;
 import enemigos.Caballero;
 import graficos.Ventana;
 import jugadores.Duende;
@@ -25,7 +25,7 @@ public class Juego extends JPanel implements ActionListener {
     private Mapa mapa;
     private Duende jugador;
     private Timer timer;
-    private Control control;
+    private ControlJuego control;
     private HashSet<Pared> paredes;
  
 
@@ -34,7 +34,7 @@ public class Juego extends JPanel implements ActionListener {
         this.mapa = new Mapa();
         this.jugador = mapa.getJugador();
         this.paredes = mapa.getParedes();
-        this.control = new Control();
+        this.control = new ControlJuego();
         this.timer = new Timer(Ventana.FRAME, this);
         timer.start();
         
@@ -52,14 +52,16 @@ public class Juego extends JPanel implements ActionListener {
     public void actualizar() {
         String direccion = this.control.getDireccion();
         System.out.println(direccion);
-        this.jugador.setDireccion(direccion);
+        this.jugador.actualizarDireccion(direccion, this.paredes);
+        this.jugador.mover(this.paredes);
         this.mapa.actualizar();
-        this.jugador.actualizarDireccion(this.paredes);
+        System.out.printf("dx: %d | dy: %d %n", this.jugador.getVelocidadX(), this.jugador.getVelocidadY());
+        //this.jugador.actualizarDireccion(this.paredes);
 
     
         for (Caballero caballero: mapa.getCaballeros()) {
             if (this.jugador.detectarColisionCaballero(caballero)) {
-                timer.stop();
+                //timer.stop();
             }
         }
 
