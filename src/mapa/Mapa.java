@@ -9,11 +9,11 @@ import jugadores.Duende;
 import objetos.Comida;
 import objetos.Pared;
 
-public class Mapa {
-    private static final int PARED = 1;
-    private static final int COMIDA = 0;
-    private static final int CABALLERO = 3;
-    private static final int JUGADOR = 4;
+public class Mapa{
+    public static final int PARED = 1;
+    public static final int COMIDA = 0;
+    public static final int CABALLERO = 3;
+    public static final int JUGADOR = 4;
 
     private final int[][] mapa = {
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -129,6 +129,10 @@ public class Mapa {
 
     public HashSet<Comida> getComidas() {
         return comidas;
+    }
+
+    public int[][] getMapa() {
+        return mapa;
     }
 
     void mostrarMapa() {

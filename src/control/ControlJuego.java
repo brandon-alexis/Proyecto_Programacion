@@ -21,6 +21,7 @@ public class ControlJuego extends KeyAdapter {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+    
     @Override
     public void keyPressed(KeyEvent e) {
         int tecla = e.getKeyCode();

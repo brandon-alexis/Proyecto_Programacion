@@ -11,6 +11,7 @@ import control.ControlJuego;
 import enemigos.Caballero;
 import graficos.Ventana;
 import main.Juego;
+import mapa.Mapa;
 import objetos.Comida;
 import objetos.Pared;
 
@@ -25,6 +26,7 @@ public class Duende {
     private String direccion;
     private String proximaDireccion;
     private List<String> direccionesValidas;
+    private int vidas;
 
     public Duende(int x, int y) {
         this.x = x;
@@ -34,7 +36,7 @@ public class Duende {
         this.direccionesValidas = List.of("arriba", "abajo", "izquierda", "derecha");
         this.direccion = ControlJuego.DERECHA;
         this.proximaDireccion = "derecha";
-        
+        this.vidas = 3;
     }
 
     public void dibujar(Graphics g) {
@@ -128,13 +130,11 @@ public class Duende {
         while (it.hasNext()) {
             Comida comida = it.next();
             if (this.detectarColisionComida(comida)) {
-                it.remove(); 
+                it.remove();
+                Juego.incrementarPuntaje();
             }
         }
     }
-
-   
-   
 
     public boolean detectarColisionPared(Pared pared) {
         return (this.x < pared.getX() + pared.getAncho()
@@ -156,7 +156,36 @@ public class Duende {
                 && this.y < comida.getY() + comida.getAlto()
                 && this.y + this.ALTO > comida.getY());
 
+    }
 
+    public void cambiarPosicion(int[][] mapa) {
+        int nuevaX, nuevaY;
+        boolean posicionValida = false;
+
+        while (!posicionValida) {
+            int columna = (int) (Math.random() * Ventana.CANTIDAD_COLUMNAS);
+            int fila = (int) (Math.random() * Ventana.CANTIDAD_FILAS);
+
+            if (mapa[fila][columna] != Mapa.PARED) {
+                nuevaX = columna * Ventana.TAMAÑO_BLOQUE;
+                nuevaY = fila * Ventana.TAMAÑO_BLOQUE;
+
+                this.x = nuevaX;
+                this.y = nuevaY;
+                posicionValida = true;
+            }
+        }
+    }
+
+    public void perderVida(int[][] mapa) {
+        this.vidas--;
+        this.cambiarPosicion(mapa);
+        System.out.println("Vidas: " + this.vidas);
+        if (this.vidas <= 0) {
+            // Aquí puedes manejar la lógica de fin de juego o reinicio
+            System.out.println("El duende ha perdido todas sus vidas.");
+
+        }
     }
 
     public int getX() {
@@ -214,4 +243,16 @@ public class Duende {
             this.proximaDireccion = proximaDireccion;
         }
     }
+
+    public int getVidas() {
+        
+
+        return vidas;
+
+    }
+    // metodo para cuando el duende pierde las 3 vidas pare el juego y no se pueda
+    // jugar mas
+
+   
+
 }

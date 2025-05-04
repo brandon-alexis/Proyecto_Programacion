@@ -41,6 +41,7 @@ public class Juego extends JPanel implements ActionListener {
         this.puntaje = 0;
         timer.start();
         
+        
         this.setPreferredSize(new Dimension(Ventana.ALTO, Ventana.ANCHO));
 
         this.addKeyListener(control);
@@ -51,11 +52,11 @@ public class Juego extends JPanel implements ActionListener {
         this.mapa.dibujar(g);
         this.jugador.dibujar(g);
         this.mostrarPuntaje(g);
-       
+        this.mostrarVidas(g);
     }
 
     // metodo para sumar puntaje cuando el jugador come
-    public static void sumarPuntaje() {
+    public static void incrementarPuntaje() {
         puntaje++;
     }
 
@@ -70,8 +71,12 @@ public class Juego extends JPanel implements ActionListener {
     
         for (Caballero caballero: mapa.getCaballeros()) {
             if (this.jugador.detectarColisionCaballero(caballero)) {
-                timer.stop();
+                this.jugador.perderVida(this.mapa.getMapa());
             }
+        }
+
+        if (this.jugador.getVidas() == 0) {
+            this.detenerJuego();
         }
 
         this.repaint();
@@ -90,12 +95,20 @@ public class Juego extends JPanel implements ActionListener {
         g.drawString("Puntaje: " + puntaje, 10, 20);
     }
 
+    //metodo para mostrar ventanita con las vidas
+    public void mostrarVidas(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.drawString("Vidas: " + this.jugador.getVidas(), 10, 40);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         this.actualizar();
         this.repaint();
     }
 
-    
+    public void detenerJuego() {
+        this.timer.stop();
+    }
 
 }
