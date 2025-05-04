@@ -11,7 +11,7 @@ import objetos.Pared;
 
 public class Mapa {
     private static final int PARED = 1;
-    private static final int COMIDA = 2;
+    private static final int COMIDA = 0;
     private static final int CABALLERO = 3;
     private static final int JUGADOR = 4;
 
@@ -20,26 +20,28 @@ public class Mapa {
             { 1, 4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1 },
             { 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 3, 0, 0, 0, 1 },
-            { 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1 },
-            { 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
+            { 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 1, 0, 1, 1, 0, 1 },
+            { 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 3, 1 },
+            { 1, 2, 1, 0, 0, 0, 0, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
             { 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1 },
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1 },
-            { 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1 },
+            { 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1 },
             { 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },
             { 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1 },
+            { 1, 0, 1, 0, 1, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1 },
             { 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1 },
             { 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1 },
             { 1, 0, 1, 0, 1, 3, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1 },
             { 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },
             { 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1 },
-            { 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 3, 1, 0, 1, 1, 1, 0, 1 },
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+            { 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 3, 1, 0, 1, 1, 1, 3, 1 },
+            { 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
     };
 
+
+     
     private HashSet<Pared> paredes;
     private HashSet<Caballero> caballeros;
     private HashSet<Comida> comidas;
@@ -90,7 +92,7 @@ public class Mapa {
             }
         }
     }
-
+    
     public void dibujar(Graphics g) {
         for (Pared pared : paredes) {
             pared.dibujar(g);
@@ -108,7 +110,7 @@ public class Mapa {
 
     public void actualizar() {
         for (Caballero caballero : caballeros) {
-            caballero.perseguir(this.jugador.getX(), this.jugador.getY(), this.paredes);
+            caballero.actualizarComportamiento(this.jugador.getX(), this.jugador.getY(), this.paredes);
 
         }
     }
@@ -125,4 +127,20 @@ public class Mapa {
         return caballeros;
     }
 
+    public HashSet<Comida> getComidas() {
+        return comidas;
+    }
+
+    void mostrarMapa() {
+        for (int[] fila : mapa) {
+            for (int celda : fila) {
+                System.out.print(celda + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    
 }
+
+

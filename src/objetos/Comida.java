@@ -22,6 +22,14 @@ public class Comida {
         this.isEaten = false;
     }
 
+    public void cambiarPosicionAleatoria() {
+        int xAleatorio = (int) (Math.random() * (Ventana.ANCHO - ANCHO));
+        int yAleatorio = (int) (Math.random() * (Ventana.ALTO - ALTO));
+        this.x = xAleatorio;
+        this.y = yAleatorio;
+    }
+    
+  
     public int getX() {
         return x;
     }

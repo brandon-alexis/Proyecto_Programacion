@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import control.ControlJuego;
 import enemigos.Caballero;
 import graficos.Ventana;
+import main.Juego;
 import objetos.Comida;
 import objetos.Pared;
 
@@ -32,6 +34,7 @@ public class Duende {
         this.direccionesValidas = List.of("arriba", "abajo", "izquierda", "derecha");
         this.direccion = ControlJuego.DERECHA;
         this.proximaDireccion = "derecha";
+        
     }
 
     public void dibujar(Graphics g) {
@@ -120,6 +123,19 @@ public class Duende {
         }
     }
 
+    public void comer(HashSet<Comida> comidas) {
+        Iterator<Comida> it = comidas.iterator();
+        while (it.hasNext()) {
+            Comida comida = it.next();
+            if (this.detectarColisionComida(comida)) {
+                it.remove(); 
+            }
+        }
+    }
+
+   
+   
+
     public boolean detectarColisionPared(Pared pared) {
         return (this.x < pared.getX() + pared.getAncho()
                 && this.x + this.ANCHO > pared.getX()
@@ -139,6 +155,8 @@ public class Duende {
                 && this.x + this.ANCHO > comida.getX()
                 && this.y < comida.getY() + comida.getAlto()
                 && this.y + this.ALTO > comida.getY());
+
+
     }
 
     public int getX() {
