@@ -220,10 +220,6 @@ public class Duende {
         this.velocidadY = velocidadY;
     }
 
-    public int getVELOCIDAD() {
-        return VELOCIDAD;
-    }
-
     public String getDireccion() {
         return direccion;
     }
@@ -250,9 +246,5 @@ public class Duende {
         return vidas;
 
     }
-    // metodo para cuando el duende pierde las 3 vidas pare el juego y no se pueda
-    // jugar mas
-
-   
 
 }

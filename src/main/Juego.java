@@ -20,8 +20,6 @@ import mapa.Mapa;
 import objetos.Comida;
 import objetos.Pared;
 
-
-
 public class Juego extends JPanel implements ActionListener {
     private Mapa mapa;
     private Duende jugador;
@@ -30,7 +28,7 @@ public class Juego extends JPanel implements ActionListener {
     private HashSet<Pared> paredes;
     private HashSet<Comida> comidas;
     public static int puntaje;
- 
+
     public Juego() {
         this.mapa = new Mapa();
         this.jugador = mapa.getJugador();
@@ -40,8 +38,7 @@ public class Juego extends JPanel implements ActionListener {
         this.timer = new Timer(Ventana.FRAME, this);
         this.puntaje = 0;
         timer.start();
-        
-        
+
         this.setPreferredSize(new Dimension(Ventana.ALTO, Ventana.ANCHO));
 
         this.addKeyListener(control);
@@ -53,39 +50,42 @@ public class Juego extends JPanel implements ActionListener {
         this.jugador.dibujar(g);
         this.mostrarPuntaje(g);
         this.mostrarVidas(g);
-        
-        if (this.jugador.getVidas() == 0) {
+
+        if (this.jugador.getVidas() <= 0) {
             this.mostrarMensajeGameOver(g);
             this.detenerJuego();
         }
+
+        detenerJuegoComidas(g);
     }
 
-    // metodo para sumar puntaje cuando el jugador come
+    public void detenerJuegoComidas(Graphics g) {
+        if (this.comidas.isEmpty()) {
+            this.mostrarMensajeGanar(g);
+            this.timer.stop();
+        }
+    }
+
     public static void incrementarPuntaje() {
         puntaje++;
     }
 
     public void actualizar() {
         String direccion = this.control.getDireccion();
-        //System.out.println(direccion);
+        // System.out.println(direccion);
         this.jugador.actualizarDireccion(direccion, this.paredes);
         this.jugador.mover(this.paredes);
         this.jugador.comer(this.comidas);
         this.mapa.actualizar();
-        
 
-    
-        for (Caballero caballero: mapa.getCaballeros()) {
+        for (Caballero caballero : mapa.getCaballeros()) {
             if (this.jugador.detectarColisionCaballero(caballero)) {
                 this.jugador.perderVida(this.mapa.getMapa());
             }
         }
 
-       
-
         this.repaint();
     }
-
 
     @Override
     public void paintComponent(Graphics g) {
@@ -93,13 +93,12 @@ public class Juego extends JPanel implements ActionListener {
 
         dibujar(g);
     }
-    // hacer que aparezca puntaje en la pantalla
+
     public void mostrarPuntaje(Graphics g) {
         g.setColor(Color.WHITE);
         g.drawString("Puntaje: " + puntaje, 10, 20);
     }
 
-    //metodo para mostrar ventanita con las vidas
     public void mostrarVidas(Graphics g) {
         g.setColor(Color.WHITE);
         g.drawString("Vidas: " + this.jugador.getVidas(), 10, 40);
@@ -115,17 +114,22 @@ public class Juego extends JPanel implements ActionListener {
         this.timer.stop();
     }
 
-    //mostrar mensaje game over en medio de la pantalla cuando se detenga el juego cuando pierda todas las vidas
     public void mostrarMensajeGameOver(Graphics g) {
         if (this.jugador.getVidas() == 0) {
             g.setFont(g.getFont().deriveFont(80f));
             g.setColor(Color.red);
-           
+
             g.drawString("GAME OVER", Ventana.ANCHO / 2 - 250, Ventana.ALTO / 2);
-            
 
         }
     }
-    
+
+    public void mostrarMensajeGanar(Graphics g) {
+        if (this.comidas.isEmpty()) {
+            g.setFont(g.getFont().deriveFont(80f));
+            g.setColor(Color.green);
+            g.drawString("GANASTE", Ventana.ANCHO / 2 - 200, Ventana.ALTO / 2);
+        }
+    }
 
 }

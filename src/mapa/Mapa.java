@@ -41,7 +41,6 @@ public class Mapa{
     };
 
 
-     
     private HashSet<Pared> paredes;
     private HashSet<Caballero> caballeros;
     private HashSet<Comida> comidas;
@@ -134,17 +133,7 @@ public class Mapa{
     public int[][] getMapa() {
         return mapa;
     }
-
-    void mostrarMapa() {
-        for (int[] fila : mapa) {
-            for (int celda : fila) {
-                System.out.print(celda + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    
+  
 }
 
 
