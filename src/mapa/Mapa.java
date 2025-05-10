@@ -6,7 +6,7 @@ import java.util.HashSet;
 import enemigos.Caballero;
 import graficos.Ventana;
 import jugadores.Duende;
-import objetos.Comida;
+import objetos.Moneda;
 import objetos.Pared;
 
 public class Mapa{
@@ -15,40 +15,15 @@ public class Mapa{
     public static final int CABALLERO = 3;
     public static final int JUGADOR = 4;
 
-    private final int[][] mapa = {
-            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-            { 1, 4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
-            { 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1 },
-            { 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 3, 0, 0, 0, 1 },
-            { 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 1, 0, 1, 1, 0, 1 },
-            { 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 3, 1 },
-            { 1, 2, 1, 0, 0, 0, 0, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1 },
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-            { 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1 },
-            { 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1 },
-            { 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 1, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1 },
-            { 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 1, 3, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1 },
-            { 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },
-            { 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1 },
-            { 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 3, 1, 0, 1, 1, 1, 3, 1 },
-            { 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-    };
-
-
+    private int[][] mapa = Nivel.obtenerNivel();
     private HashSet<Pared> paredes;
     private HashSet<Caballero> caballeros;
-    private HashSet<Comida> comidas;
+    private HashSet<Moneda> monedas;
     private Duende jugador;
 
     public Mapa() {
         this.paredes = new HashSet<Pared>();
-        this.comidas = new HashSet<Comida>();
+        this.monedas = new HashSet<Moneda>();
         this.caballeros = new HashSet<Caballero>();
         this.cargarMapa();
 
@@ -76,8 +51,8 @@ public class Mapa{
                 }
 
                 if (mapa[i][j] == COMIDA) {
-                    Comida comida = new Comida(x, y);
-                    this.comidas.add(comida);
+                    Moneda comida = new Moneda(x, y);
+                    this.monedas.add(comida);
                 }
 
                 if (mapa[i][j] == CABALLERO) {
@@ -97,8 +72,8 @@ public class Mapa{
             pared.dibujar(g);
         }
 
-        for (Comida comida : comidas) {
-            comida.dibujar(g);
+        for (Moneda moneda : monedas) {
+            moneda.dibujar(g);
         }
 
         for (Caballero caballero : caballeros) {
@@ -126,8 +101,8 @@ public class Mapa{
         return caballeros;
     }
 
-    public HashSet<Comida> getComidas() {
-        return comidas;
+    public HashSet<Moneda> getMonedas() {
+        return monedas;
     }
 
     public int[][] getMapa() {

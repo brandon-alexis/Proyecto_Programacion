@@ -3,26 +3,30 @@ package objetos;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 
 public class Pared {
     private int ancho;
     private int alto;
     private int x;
     private int y;
+    private ImageIcon imagenPared;
+    private URL urlPared;
     
     public Pared(int x, int y, int ancho, int alto) {
         this.x = x;
         this.y = y;        
         this.ancho = ancho;
         this.alto = alto;
+        this.urlPared = Pared.class.getResource("../recursos/imagenes/pared.png");
+        this.imagenPared = new ImageIcon(urlPared);
     }
     
     public void dibujar(Graphics g) {
-        g.setColor(Color.GRAY);
-        g.fillRect(this.x, this.y, this.ancho, this.alto);
+        g.drawImage(imagenPared.getImage(), this.x, this.y, ancho, alto, null);
         g.setColor(Color.BLACK);
-        g.drawRect(this.x, this.y, this.ancho, this.alto);
-
     }
 
     public void actualizar() {

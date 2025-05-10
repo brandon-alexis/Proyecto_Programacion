@@ -7,13 +7,17 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 import control.ControlJuego;
 import enemigos.Caballero;
 import graficos.Ventana;
 import main.Juego;
 import mapa.Mapa;
-import objetos.Comida;
+import objetos.Moneda;
 import objetos.Pared;
+import util.Imagen;
+import util.Imagen;
 
 public class Duende {
     public static final int ANCHO = Ventana.TAMAÑO_BLOQUE;
@@ -26,6 +30,11 @@ public class Duende {
     private String direccion;
     private String proximaDireccion;
     private List<String> direccionesValidas;
+    private ImageIcon imagenArriba;
+    private ImageIcon imagenAbajo;
+    private ImageIcon imagenIzquierda;
+    private ImageIcon imagenDerecha;
+
     private int vidas;
 
     public Duende(int x, int y) {
@@ -37,11 +46,31 @@ public class Duende {
         this.direccion = ControlJuego.DERECHA;
         this.proximaDireccion = "derecha";
         this.vidas = 3;
+        this.imagenArriba = Imagen.cargar("recursos/imagenes/duende/arriba.png", ANCHO, ALTO, 1);
+        this.imagenAbajo = Imagen.cargar("recursos/imagenes/duende/abajo.png", ANCHO, ALTO, 1);
+        this.imagenIzquierda = Imagen.cargar("recursos/imagenes/duende/izquierda.png", ANCHO, ALTO, 1);
+        this.imagenDerecha = Imagen.cargar("recursos/imagenes/duende/derecha.png", ANCHO, ALTO, 1);
+
     }
 
     public void dibujar(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillRect(this.x, this.y, this.ANCHO, this.ALTO);
+        if (direccion == ControlJuego.DERECHA) {
+            g.drawImage(this.imagenDerecha.getImage(), this.x, this.y, ANCHO, ALTO, null);
+
+        }
+        
+        if (direccion == ControlJuego.IZQUIERDA) {
+            g.drawImage(this.imagenIzquierda.getImage(), this.x, this.y, ANCHO, ALTO, null);
+        }
+
+        if (direccion == ControlJuego.ARRIBA) {
+            g.drawImage(this.imagenArriba.getImage(), this.x, this.y, ANCHO, ALTO, null);
+        }
+
+        if (direccion == ControlJuego.ABAJO) {
+            g.drawImage(this.imagenAbajo.getImage(), this.x, this.y, ANCHO, ALTO, null);
+        }
+
     }
 
     public void mover(HashSet<Pared> paredes) {
@@ -125,10 +154,10 @@ public class Duende {
         }
     }
 
-    public void comer(HashSet<Comida> comidas) {
-        Iterator<Comida> it = comidas.iterator();
+    public void capturar(HashSet<Moneda> monedas) {
+        Iterator<Moneda> it = monedas.iterator();
         while (it.hasNext()) {
-            Comida comida = it.next();
+            Moneda comida = it.next();
             if (this.detectarColisionComida(comida)) {
                 it.remove();
                 Juego.incrementarPuntaje();
@@ -150,7 +179,7 @@ public class Duende {
                 && this.y + this.ALTO > caballero.getY());
     }
 
-    public boolean detectarColisionComida(Comida comida) {
+    public boolean detectarColisionComida(Moneda comida) {
         return (this.x < comida.getX() + comida.getAncho()
                 && this.x + this.ANCHO > comida.getX()
                 && this.y < comida.getY() + comida.getAlto()
@@ -241,7 +270,6 @@ public class Duende {
     }
 
     public int getVidas() {
-        
 
         return vidas;
 

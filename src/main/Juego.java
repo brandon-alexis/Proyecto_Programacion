@@ -7,8 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.URL;
 import java.util.HashSet;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -17,7 +19,7 @@ import enemigos.Caballero;
 import graficos.Ventana;
 import jugadores.Duende;
 import mapa.Mapa;
-import objetos.Comida;
+import objetos.Moneda;
 import objetos.Pared;
 
 public class Juego extends JPanel implements ActionListener {
@@ -26,16 +28,22 @@ public class Juego extends JPanel implements ActionListener {
     private Timer timer;
     private ControlJuego control;
     private HashSet<Pared> paredes;
-    private HashSet<Comida> comidas;
+    private HashSet<Moneda> monedas;
+    private ImageIcon imagenFondo;
+    private URL urlFondo;
     public static int puntaje;
+    
 
     public Juego() {
         this.mapa = new Mapa();
         this.jugador = mapa.getJugador();
         this.paredes = mapa.getParedes();
-        this.comidas = mapa.getComidas();
+        this.monedas = mapa.getMonedas();
         this.control = new ControlJuego();
         this.timer = new Timer(Ventana.FRAME, this);
+        this.urlFondo = Juego.class.getResource("../recursos/imagenes/piso.png");
+        this.imagenFondo = new ImageIcon(urlFondo);
+        
         this.puntaje = 0;
         timer.start();
 
@@ -45,11 +53,13 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     public void dibujar(Graphics g) {
-        this.setBackground(Color.BLACK);
+        this.dibujarFondo(g);
         this.mapa.dibujar(g);
         this.jugador.dibujar(g);
         this.mostrarPuntaje(g);
         this.mostrarVidas(g);
+        
+        
 
         if (this.jugador.getVidas() <= 0) {
             this.mostrarMensajeGameOver(g);
@@ -60,7 +70,7 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     public void detenerJuegoComidas(Graphics g) {
-        if (this.comidas.isEmpty()) {
+        if (this.monedas.isEmpty()) {
             this.mostrarMensajeGanar(g);
             this.timer.stop();
         }
@@ -75,7 +85,7 @@ public class Juego extends JPanel implements ActionListener {
         // System.out.println(direccion);
         this.jugador.actualizarDireccion(direccion, this.paredes);
         this.jugador.mover(this.paredes);
-        this.jugador.comer(this.comidas);
+        this.jugador.capturar(monedas);
         this.mapa.actualizar();
 
         for (Caballero caballero : mapa.getCaballeros()) {
@@ -125,11 +135,15 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     public void mostrarMensajeGanar(Graphics g) {
-        if (this.comidas.isEmpty()) {
+        if (this.monedas.isEmpty()) {
             g.setFont(g.getFont().deriveFont(80f));
             g.setColor(Color.green);
             g.drawString("GANASTE", Ventana.ANCHO / 2 - 200, Ventana.ALTO / 2);
         }
     }
 
+    public void dibujarFondo(Graphics g) {
+        g.drawImage(imagenFondo.getImage(), 0, 0, Ventana.ANCHO, Ventana.ALTO, this);
+        
+    }
 }

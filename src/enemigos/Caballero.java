@@ -28,7 +28,7 @@ public class Caballero {
     }
 
     public void dibujar(Graphics g) {
-        g.setColor(Color.GREEN);
+        g.setColor(Color.RED);
         g.fillRect(this.x, this.y, this.ANCHO, this.ALTO);
     }
 

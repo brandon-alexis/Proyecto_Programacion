@@ -2,27 +2,41 @@ package objetos;
 
 
 import java.awt.Graphics;
+import java.awt.Image;
 
 import graficos.Ventana;
 
 import java.awt.Color;
 
-public class Comida {
+import java.net.URL;
+
+import javax.swing.ImageIcon;
+
+
+public class Moneda {
     private int x;
     private int y;
+    private ImageIcon imagenOriginalMoneda;
+    private ImageIcon imagenMoneda;
+    private URL urlMoneda;
 
     // Tamaño de la comida
     public static final int ANCHO = Ventana.TAMAÑO_BLOQUE / 2; // 32
     public static final int ALTO = Ventana.TAMAÑO_BLOQUE / 2; // 32
 
-    public Comida(int x, int y) {
+
+
+    public Moneda(int x, int y) {
         this.x = x;
         this.y = y;
+        this.urlMoneda = Moneda.class.getResource("../recursos/imagenes/moneda.png");
+        this.imagenOriginalMoneda = new  ImageIcon(urlMoneda);
+        Image imagenEscalada = imagenOriginalMoneda.getImage().getScaledInstance(ANCHO * 3, ALTO * 3, Image.SCALE_SMOOTH);
+        this.imagenMoneda = new ImageIcon(imagenEscalada);
     }
 
     public void dibujar(Graphics g) {
-        g.setColor(Color.YELLOW);
-        g.fillOval(this.x + 5, this.y + 5, ANCHO, ALTO);
+      g.drawImage(imagenMoneda.getImage(), this.x - 9, this.y - 9, null);
     }
     
     public int getX() {
@@ -48,6 +62,5 @@ public class Comida {
     public static int getAlto() {
         return ALTO;
     }
-
     
 }
