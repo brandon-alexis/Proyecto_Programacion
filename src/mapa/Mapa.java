@@ -29,7 +29,7 @@ public class Mapa{
 
     }
 
-    private void cargarMapa() {
+    public void cargarMapa() {
         if (mapa.length != Ventana.CANTIDAD_FILAS || mapa[0].length != Ventana.CANTIDAD_COLUMNAS) {
             System.out.printf(
                     "El mapa tiene una dimension de %dx%d y tiene que tener una dimension de %dx%d para ser valido",

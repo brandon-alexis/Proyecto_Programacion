@@ -1,5 +1,6 @@
 package main;
 
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,11 +15,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import sonido.Sonido;
 import control.ControlJuego;
 import enemigos.Caballero;
 import graficos.Ventana;
 import jugadores.Duende;
 import mapa.Mapa;
+import mapa.Nivel;
 import objetos.Moneda;
 import objetos.Pared;
 
@@ -29,10 +32,8 @@ public class Juego extends JPanel implements ActionListener {
     private ControlJuego control;
     private HashSet<Pared> paredes;
     private HashSet<Moneda> monedas;
-    private ImageIcon imagenFondo;
-    private URL urlFondo;
     public static int puntaje;
-    
+    private Sonido sonido;
 
     public Juego() {
         this.mapa = new Mapa();
@@ -41,9 +42,8 @@ public class Juego extends JPanel implements ActionListener {
         this.monedas = mapa.getMonedas();
         this.control = new ControlJuego();
         this.timer = new Timer(Ventana.FRAME, this);
-        this.urlFondo = Juego.class.getResource("../recursos/imagenes/piso.png");
-        this.imagenFondo = new ImageIcon(urlFondo);
-        
+        this.sonido = new Sonido();
+
         this.puntaje = 0;
         timer.start();
 
@@ -58,8 +58,6 @@ public class Juego extends JPanel implements ActionListener {
         this.jugador.dibujar(g);
         this.mostrarPuntaje(g);
         this.mostrarVidas(g);
-        
-        
 
         if (this.jugador.getVidas() <= 0) {
             this.mostrarMensajeGameOver(g);
@@ -70,9 +68,15 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     public void detenerJuegoComidas(Graphics g) {
-        if (this.monedas.isEmpty()) {
-            this.mostrarMensajeGanar(g);
-            this.timer.stop();
+        if (this.monedas.isEmpty() && Nivel.getNivel() < 3) {
+            this.puntaje = 0;
+            Nivel.pasarNivel();
+            this.mapa.cargarMapa();
+            this.mapa = new Mapa();
+        this.jugador = mapa.getJugador();
+        this.paredes = mapa.getParedes();
+        this.monedas = mapa.getMonedas();
+            
         }
     }
 
@@ -87,6 +91,7 @@ public class Juego extends JPanel implements ActionListener {
         this.jugador.mover(this.paredes);
         this.jugador.capturar(monedas);
         this.mapa.actualizar();
+        this.sonido.reproducirSonido("juego");
 
         for (Caballero caballero : mapa.getCaballeros()) {
             if (this.jugador.detectarColisionCaballero(caballero)) {
@@ -105,13 +110,15 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     public void mostrarPuntaje(Graphics g) {
+        g.fillRect(0, 0, 160, 30);
         g.setColor(Color.WHITE);
         g.drawString("Puntaje: " + puntaje, 10, 20);
     }
 
     public void mostrarVidas(Graphics g) {
+        
         g.setColor(Color.WHITE);
-        g.drawString("Vidas: " + this.jugador.getVidas(), 10, 40);
+        g.drawString("Vidas: " + this.jugador.getVidas(), 90, 20);
     }
 
     @Override
@@ -143,7 +150,19 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     public void dibujarFondo(Graphics g) {
-        g.drawImage(imagenFondo.getImage(), 0, 0, Ventana.ANCHO, Ventana.ALTO, this);
-        
+        int nivel = Nivel.getNivel();
+
+        if (nivel == 0) {
+            g.setColor(Color.black);
+        } else if (nivel == 1) {
+            g.setColor(new Color(47, 53, 66));
+        } else if (nivel == 2) {
+            g.setColor(new Color(126, 81, 9  ));
+        } else if (nivel == 3) {
+            g.setColor(Color.GRAY);
+        }
+
+        g.fillRect(0, 0, Ventana.ANCHO, Ventana.ALTO);
+
     }
 }

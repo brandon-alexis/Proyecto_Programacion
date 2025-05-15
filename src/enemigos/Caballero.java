@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
+import javax.swing.ImageIcon;
 
 import graficos.Ventana;
 import objetos.Pared;
+import util.Imagen;
+import control.ControlJuego;
 
 public class Caballero {
     private static final int ANCHO = Ventana.TAMAÑO_BLOQUE;
@@ -16,43 +19,75 @@ public class Caballero {
     private int y;
     private int velocidadX;
     private int velocidadY;
-    private String direccion;
+    private String direccion = ControlJuego.ABAJO;
     private int dirX = 0;
     private int dirY = 0;
+    private ImageIcon imagenArriba;
+    private ImageIcon imagenAbajo;
+    private ImageIcon imagenIzquierda;
+    private ImageIcon imagenDerecha;
 
     public Caballero(int x, int y) {
         this.x = x;
         this.y = y;
         this.velocidadX = VELOCIDAD;
         this.velocidadY = VELOCIDAD;
+        this.imagenArriba = Imagen.cargar("recursos/imagenes/caballero/arriba.png", ANCHO, ALTO, 1);
+        this.imagenAbajo = Imagen.cargar("recursos/imagenes/caballero/abajo.png", ANCHO, ALTO, 1);
+        this.imagenIzquierda = Imagen.cargar("recursos/imagenes/caballero/izquierda.png", ANCHO, ALTO, 1);
+        this.imagenDerecha = Imagen.cargar("recursos/imagenes/caballero/derecha.png", ANCHO, ALTO, 1);
+        this.direccion = ControlJuego.ABAJO;
+      
+        
+        
     }
 
     public void dibujar(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillRect(this.x, this.y, this.ANCHO, this.ALTO);
+        if (direccion == ControlJuego.DERECHA) {
+            g.drawImage(this.imagenDerecha.getImage(), this.x, this.y, ANCHO, ALTO, null);
+
+        }
+
+        if (direccion == ControlJuego.IZQUIERDA) {
+            g.drawImage(this.imagenIzquierda.getImage(), this.x, this.y, ANCHO, ALTO, null);
+        }
+
+        if (direccion == ControlJuego.ARRIBA) {
+            g.drawImage(this.imagenArriba.getImage(), this.x, this.y, ANCHO, ALTO, null);
+        }
+
+        if (direccion == ControlJuego.ABAJO) {
+            g.drawImage(this.imagenAbajo.getImage(), this.x, this.y, ANCHO, ALTO, null);
+        }
+        
+       
     }
 
     public void mover(int dx, int dy) {
         this.x += dx;
         this.y += dy;
     }
-
     public void manejarTeclas(int keyCode) {
         switch (keyCode) {
             case KeyEvent.VK_UP:
                 mover(0, -Ventana.TAMAÑO_BLOQUE);
+                direccion = ControlJuego.ARRIBA;
                 break;
             case KeyEvent.VK_DOWN:
                 mover(0, Ventana.TAMAÑO_BLOQUE);
+                direccion = ControlJuego.ABAJO;
                 break;
             case KeyEvent.VK_LEFT:
                 mover(-Ventana.TAMAÑO_BLOQUE, 0);
+                direccion = ControlJuego.IZQUIERDA;
                 break;
             case KeyEvent.VK_RIGHT:
                 mover(Ventana.TAMAÑO_BLOQUE, 0);
+                direccion = ControlJuego.DERECHA;
                 break;
         }
     }
+    
 
     public boolean detectarColisionPared(int nuevoX, int nuevoY, HashSet<Pared> paredes) {
         for (Pared pared : paredes) {
@@ -74,8 +109,6 @@ public class Caballero {
                 { 0, this.velocidadY },
                 { 0, -this.velocidadY }
         };
-
-        
 
         int mejorDX = 0;
         int mejorDY = 0;

@@ -17,7 +17,6 @@ import mapa.Mapa;
 import objetos.Moneda;
 import objetos.Pared;
 import util.Imagen;
-import util.Imagen;
 
 public class Duende {
     public static final int ANCHO = Ventana.TAMAÑO_BLOQUE;
