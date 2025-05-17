@@ -1,6 +1,5 @@
 package enemigos;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
@@ -37,9 +36,7 @@ public class Caballero {
         this.imagenIzquierda = Imagen.cargar("recursos/imagenes/caballero/izquierda.png", ANCHO, ALTO, 1);
         this.imagenDerecha = Imagen.cargar("recursos/imagenes/caballero/derecha.png", ANCHO, ALTO, 1);
         this.direccion = ControlJuego.ABAJO;
-      
-        
-        
+
     }
 
     public void dibujar(Graphics g) {
@@ -59,14 +56,14 @@ public class Caballero {
         if (direccion == ControlJuego.ABAJO) {
             g.drawImage(this.imagenAbajo.getImage(), this.x, this.y, ANCHO, ALTO, null);
         }
-        
-       
+
     }
 
     public void mover(int dx, int dy) {
         this.x += dx;
         this.y += dy;
     }
+
     public void manejarTeclas(int keyCode) {
         switch (keyCode) {
             case KeyEvent.VK_UP:
@@ -87,14 +84,13 @@ public class Caballero {
                 break;
         }
     }
-    
 
     public boolean detectarColisionPared(int nuevoX, int nuevoY, HashSet<Pared> paredes) {
         for (Pared pared : paredes) {
             if (nuevoX < pared.getX() + pared.getAncho() &&
-                    nuevoX + this.ANCHO > pared.getX() &&
+                    nuevoX + ANCHO > pared.getX() &&
                     nuevoY < pared.getY() + pared.getAlto() &&
-                    nuevoY + this.ALTO > pared.getY()) {
+                    nuevoY + ALTO > pared.getY()) {
                 return true;
             }
         }
@@ -131,6 +127,17 @@ public class Caballero {
 
         // Si encontró alguna dirección válida, moverse
         if (mejorDistancia < Double.MAX_VALUE) {
+            // Establecer la dirección correspondiente
+            if (mejorDX > 0) {
+                direccion = ControlJuego.DERECHA;
+            } else if (mejorDX < 0) {
+                direccion = ControlJuego.IZQUIERDA;
+            } else if (mejorDY > 0) {
+                direccion = ControlJuego.ABAJO;
+            } else if (mejorDY < 0) {
+                direccion = ControlJuego.ARRIBA;
+            }
+
             this.mover(mejorDX, mejorDY);
         }
     }
@@ -144,12 +151,14 @@ public class Caballero {
             int[] nuevaDir = direcciones[(int) (Math.random() * direcciones.length)];
             dirX = nuevaDir[0];
             dirY = nuevaDir[1];
+
         }
 
         int nuevoX = this.x + dirX * this.velocidadX;
         int nuevoY = this.y + dirY * this.velocidadY;
 
         if (!detectarColisionPared(nuevoX, nuevoY, paredes)) {
+            actualizarDireccion(dirX, dirY);
             this.mover(dirX * this.velocidadX, dirY * this.velocidadY);
         } else {
             // Cambiar de dirección si choca
@@ -167,8 +176,21 @@ public class Caballero {
             } while (detectarColisionPared(nuevoX, nuevoY, paredes) && intento < 10);
 
             if (!detectarColisionPared(nuevoX, nuevoY, paredes)) {
+                actualizarDireccion(dirX, dirY);
                 this.mover(dirX * this.velocidadX, dirY * this.velocidadY);
             }
+        }
+    }
+
+    private void actualizarDireccion(int dx, int dy) {
+        if (dx > 0) {
+            direccion = ControlJuego.DERECHA;
+        } else if (dx < 0) {
+            direccion = ControlJuego.IZQUIERDA;
+        } else if (dy > 0) {
+            direccion = ControlJuego.ABAJO;
+        } else if (dy < 0) {
+            direccion = ControlJuego.ARRIBA;
         }
     }
 

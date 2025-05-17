@@ -6,8 +6,6 @@ import java.awt.Image;
 
 import graficos.Ventana;
 
-import java.awt.Color;
-
 import java.net.URL;
 
 import javax.swing.ImageIcon;

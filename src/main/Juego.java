@@ -1,17 +1,12 @@
 package main;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.net.URL;
 import java.util.HashSet;
 
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -32,7 +27,7 @@ public class Juego extends JPanel implements ActionListener {
     private ControlJuego control;
     private HashSet<Pared> paredes;
     private HashSet<Moneda> monedas;
-    public static int puntaje;
+    public static int PUNTAJE;
     private Sonido sonido;
 
     public Juego() {
@@ -44,7 +39,7 @@ public class Juego extends JPanel implements ActionListener {
         this.timer = new Timer(Ventana.FRAME, this);
         this.sonido = new Sonido();
 
-        this.puntaje = 0;
+        PUNTAJE = 0;
         timer.start();
 
         this.setPreferredSize(new Dimension(Ventana.ALTO, Ventana.ANCHO));
@@ -69,19 +64,19 @@ public class Juego extends JPanel implements ActionListener {
 
     public void detenerJuegoComidas(Graphics g) {
         if (this.monedas.isEmpty() && Nivel.getNivel() < 3) {
-            this.puntaje = 0;
+            PUNTAJE = 0;
             Nivel.pasarNivel();
             this.mapa.cargarMapa();
             this.mapa = new Mapa();
-        this.jugador = mapa.getJugador();
-        this.paredes = mapa.getParedes();
-        this.monedas = mapa.getMonedas();
-            
+            this.jugador = mapa.getJugador();
+            this.paredes = mapa.getParedes();
+            this.monedas = mapa.getMonedas();
+
         }
     }
 
     public static void incrementarPuntaje() {
-        puntaje++;
+        PUNTAJE++;
     }
 
     public void actualizar() {
@@ -112,11 +107,11 @@ public class Juego extends JPanel implements ActionListener {
     public void mostrarPuntaje(Graphics g) {
         g.fillRect(0, 0, 160, 30);
         g.setColor(Color.WHITE);
-        g.drawString("Puntaje: " + puntaje, 10, 20);
+        g.drawString("Puntaje: " + PUNTAJE, 10, 20);
     }
 
     public void mostrarVidas(Graphics g) {
-        
+
         g.setColor(Color.WHITE);
         g.drawString("Vidas: " + this.jugador.getVidas(), 90, 20);
     }
@@ -157,7 +152,7 @@ public class Juego extends JPanel implements ActionListener {
         } else if (nivel == 1) {
             g.setColor(new Color(47, 53, 66));
         } else if (nivel == 2) {
-            g.setColor(new Color(126, 81, 9  ));
+            g.setColor(new Color(126, 81, 9));
         } else if (nivel == 3) {
             g.setColor(Color.GRAY);
         }
@@ -165,4 +160,6 @@ public class Juego extends JPanel implements ActionListener {
         g.fillRect(0, 0, Ventana.ANCHO, Ventana.ALTO);
 
     }
+
+    //crear un metodo para reiniciae el juego cuan
 }

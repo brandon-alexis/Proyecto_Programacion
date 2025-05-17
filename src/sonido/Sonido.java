@@ -53,7 +53,7 @@ public void reproducirSonido(String pista){
         clip.setFramePosition(0);  // Reinicia el sonido desde el inicio
         clip.start();
     } else {
-        System.out.println("Sonido no encontrado: " + pista);
+        //System.out.println("Sonido no encontrado: " + pista);
     }
 }
 // Método para reproducir un sonido en bucle
