@@ -162,7 +162,7 @@ public class Duende {
             if (this.detectarColisionComida(comida)) {
                 it.remove();
                 Juego.incrementarPuntaje();
-                this.sonido.reproducirSonidoMultiple("moneda", 0.7f);
+                this.sonido.reproducirSonidoMultiple("moneda", 0.6f);
             }
         }
     }
