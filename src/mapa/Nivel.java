@@ -1,7 +1,7 @@
 package mapa;
 
 public class Nivel {
-    private static int nivelActual = 1;
+    private static int nivelActual = 0;
 
     private static final int[][] mapaNivel0 = {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },

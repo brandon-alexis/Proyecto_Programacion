@@ -21,7 +21,9 @@ public class Sonido {
         // array nombre del sonido, ruta del sonido(de tener la extension .wav)
         rutas = new String[][] {
                 { "juego", "sonido/juego_fondo_sonido.wav" },
-                { "moneda", "sonido/moneda_sonido.wav" }
+                { "moneda", "sonido/moneda_sonido.wav" },
+                { "ganar_juego", "sonido/juego_victoria.wav" },
+                { "perder_juego", "sonido/juego_gameover.wav" }
         };
 
         cargarSonidos();

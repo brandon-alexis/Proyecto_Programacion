@@ -39,7 +39,6 @@ public class Juego extends JPanel implements ActionListener {
         this.control = new ControlJuego();
         this.timer = new Timer(Ventana.FRAME, this);
         this.sonido = new Sonido();
-        
 
         PUNTAJE = 0;
         timer.start();
@@ -61,18 +60,35 @@ public class Juego extends JPanel implements ActionListener {
             this.detenerJuego();
         }
 
-        detenerJuegoComidas(g);
+        if (this.monedas.isEmpty() && Nivel.getNivel() < 3) {
+            mostrarMensajeGanar(g);
+            detenerJuegoComidas(g);
+        }
     }
 
     public void detenerJuegoComidas(Graphics g) {
         if (this.monedas.isEmpty() && Nivel.getNivel() < 3) {
-            PUNTAJE = 0;
-            Nivel.pasarNivel();
-            this.mapa.cargarMapa();
-            this.mapa = new Mapa();
-            this.jugador = mapa.getJugador();
-            this.paredes = mapa.getParedes();
-            this.monedas = mapa.getMonedas();
+
+            this.timer.stop();
+
+            int opcion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Quieres jugar el siguient nivel?",
+                    "Game Over",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                PUNTAJE = 0;
+                Nivel.pasarNivel();
+                this.mapa.cargarMapa();
+                this.mapa = new Mapa();
+                this.jugador = mapa.getJugador();
+                this.paredes = mapa.getParedes();
+                this.monedas = mapa.getMonedas();
+                this.timer.start();
+            }
+        } else {
+            System.exit(0);
         }
     }
 
@@ -155,7 +171,9 @@ public class Juego extends JPanel implements ActionListener {
             g.setColor(Color.red);
 
             g.drawString("GAME OVER", Ventana.ANCHO / 2 - 250, Ventana.ALTO / 2);
-
+            this.sonido.detenerSonido("juego");
+            this.sonido.reproducirSonido("perder_juego");
+            this.sonido.setVolumen("perder_juego", 0.7f);
         }
     }
 
@@ -164,6 +182,9 @@ public class Juego extends JPanel implements ActionListener {
             g.setFont(g.getFont().deriveFont(80f));
             g.setColor(Color.green);
             g.drawString("GANASTE", Ventana.ANCHO / 2 - 200, Ventana.ALTO / 2);
+            this.sonido.detenerSonido("juego");
+            this.sonido.reproducirSonido("ganar_juego");
+            this.sonido.setVolumen("ganar_juego", 0.7f);
         }
     }
 

@@ -132,7 +132,7 @@ public class Duende {
         }
     }
 
-    public void actualizarVelocidad() {
+    private void actualizarVelocidad() {
         switch (this.direccion) {
             case ControlJuego.ARRIBA:
                 this.velocidadX = 0;
