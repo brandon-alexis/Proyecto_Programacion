@@ -88,8 +88,7 @@ public class Juego extends JPanel implements ActionListener {
         this.jugador.capturar(monedas);
         this.mapa.actualizar();
         this.sonido.reproducirSonido("juego");
-        this.sonido.setVolumen("juego", 1f);
-
+        this.sonido.loopSonido("juego");
 
         for (Caballero caballero : mapa.getCaballeros()) {
             if (this.jugador.detectarColisionCaballero(caballero)) {
