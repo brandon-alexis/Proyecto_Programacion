@@ -2,11 +2,7 @@ package graficos;
 
 
 import java.awt.Dimension;
-import java.awt.Frame;
-
 import javax.swing.JFrame;
-
-import control.ControlJuego;
 import main.Juego;
 
 public class Ventana extends JFrame {

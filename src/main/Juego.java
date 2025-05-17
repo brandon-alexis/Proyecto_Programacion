@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -38,6 +39,7 @@ public class Juego extends JPanel implements ActionListener {
         this.control = new ControlJuego();
         this.timer = new Timer(Ventana.FRAME, this);
         this.sonido = new Sonido();
+        
 
         PUNTAJE = 0;
         timer.start();
@@ -71,7 +73,6 @@ public class Juego extends JPanel implements ActionListener {
             this.jugador = mapa.getJugador();
             this.paredes = mapa.getParedes();
             this.monedas = mapa.getMonedas();
-
         }
     }
 
@@ -87,6 +88,8 @@ public class Juego extends JPanel implements ActionListener {
         this.jugador.capturar(monedas);
         this.mapa.actualizar();
         this.sonido.reproducirSonido("juego");
+        this.sonido.setVolumen("juego", 1f);
+
 
         for (Caballero caballero : mapa.getCaballeros()) {
             if (this.jugador.detectarColisionCaballero(caballero)) {
@@ -124,6 +127,26 @@ public class Juego extends JPanel implements ActionListener {
 
     public void detenerJuego() {
         this.timer.stop();
+
+        int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Quieres volver a jugar?",
+                "Game Over",
+                JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            PUNTAJE = 0;
+            this.mapa = new Mapa();
+            this.mapa.cargarMapa();
+            this.jugador = mapa.getJugador();
+            this.jugador.setVidas(3);
+            this.paredes = mapa.getParedes();
+            this.monedas = mapa.getMonedas();
+            this.timer.restart();
+            this.repaint();
+        } else {
+            System.exit(0);
+        }
     }
 
     public void mostrarMensajeGameOver(Graphics g) {
@@ -152,7 +175,7 @@ public class Juego extends JPanel implements ActionListener {
         } else if (nivel == 1) {
             g.setColor(new Color(47, 53, 66));
         } else if (nivel == 2) {
-            g.setColor(new Color(126, 81, 9));
+            g.setColor(new Color(245, 245, 220));
         } else if (nivel == 3) {
             g.setColor(Color.GRAY);
         }
@@ -160,6 +183,4 @@ public class Juego extends JPanel implements ActionListener {
         g.fillRect(0, 0, Ventana.ANCHO, Ventana.ALTO);
 
     }
-
-    //crear un metodo para reiniciae el juego cuan
 }

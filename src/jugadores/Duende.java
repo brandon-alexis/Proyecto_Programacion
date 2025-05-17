@@ -1,11 +1,10 @@
 package jugadores;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+
 
 import javax.swing.ImageIcon;
 
@@ -16,6 +15,7 @@ import main.Juego;
 import mapa.Mapa;
 import objetos.Moneda;
 import objetos.Pared;
+import sonido.Sonido;
 import util.Imagen;
 
 public class Duende {
@@ -33,6 +33,8 @@ public class Duende {
     private ImageIcon imagenAbajo;
     private ImageIcon imagenIzquierda;
     private ImageIcon imagenDerecha;
+    private Sonido sonido;
+
 
     private int vidas;
 
@@ -49,7 +51,7 @@ public class Duende {
         this.imagenAbajo = Imagen.cargar("recursos/imagenes/duende/abajo.png", ANCHO, ALTO, 1);
         this.imagenIzquierda = Imagen.cargar("recursos/imagenes/duende/izquierda.png", ANCHO, ALTO, 1);
         this.imagenDerecha = Imagen.cargar("recursos/imagenes/duende/derecha.png", ANCHO, ALTO, 1);
-
+        this.sonido = new Sonido();
     }
 
     public void dibujar(Graphics g) {
@@ -160,29 +162,30 @@ public class Duende {
             if (this.detectarColisionComida(comida)) {
                 it.remove();
                 Juego.incrementarPuntaje();
+                this.sonido.reproducirSonidoMultiple("moneda", 0.8f);
             }
         }
     }
 
     public boolean detectarColisionPared(Pared pared) {
         return (this.x < pared.getX() + pared.getAncho()
-                && this.x + this.ANCHO > pared.getX()
+                && this.x + ANCHO > pared.getX()
                 && this.y < pared.getY() + pared.getAlto()
-                && this.y + this.ALTO > pared.getY());
+                && this.y + ALTO > pared.getY());
     }
 
     public boolean detectarColisionCaballero(Caballero caballero) {
         return (this.x < caballero.getX() + caballero.getAncho()
-                && this.x + this.ANCHO > caballero.getX()
+                && this.x + ANCHO > caballero.getX()
                 && this.y < caballero.getY() + caballero.getAlto()
-                && this.y + this.ALTO > caballero.getY());
+                && this.y + ALTO > caballero.getY());
     }
 
     public boolean detectarColisionComida(Moneda comida) {
         return (this.x < comida.getX() + comida.getAncho()
-                && this.x + this.ANCHO > comida.getX()
+                && this.x + ANCHO > comida.getX()
                 && this.y < comida.getY() + comida.getAlto()
-                && this.y + this.ALTO > comida.getY());
+                && this.y + ALTO > comida.getY());
 
     }
 
@@ -209,11 +212,7 @@ public class Duende {
         this.vidas--;
         this.cambiarPosicion(mapa);
         System.out.println("Vidas: " + this.vidas);
-        if (this.vidas <= 0) {
-            // Aquí puedes manejar la lógica de fin de juego o reinicio
-            System.out.println("El duende ha perdido todas sus vidas.");
-
-        }
+        
     }
 
     public int getX() {
@@ -266,6 +265,10 @@ public class Duende {
         if (this.direccionesValidas.contains(proximaDireccion)) {
             this.proximaDireccion = proximaDireccion;
         }
+    }
+
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
     }
 
     public int getVidas() {
