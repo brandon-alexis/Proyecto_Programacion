@@ -40,6 +40,8 @@ public class Mapa{
             throw new ArrayIndexOutOfBoundsException();
         }
 
+        limpiarElementos();
+
         for (int i = 0; i < Ventana.CANTIDAD_FILAS; i++) {
             for (int j = 0; j < Ventana.CANTIDAD_COLUMNAS; j++) {
                 int x = Ventana.TAMAÑO_BLOQUE * j;
@@ -65,6 +67,12 @@ public class Mapa{
                 }
             }
         }
+    }
+
+    private void limpiarElementos() {
+        this.caballeros.clear();
+        this.paredes.clear();
+        this.monedas.clear();
     }
     
     public void dibujar(Graphics g) {

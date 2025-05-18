@@ -1,7 +1,8 @@
 package mapa;
 
 public class Nivel {
-    private static int nivelActual = 0;
+    private static int nivelActual = 1;
+    public static final int NIVEL_MAXIMO = 3; 
 
     private static final int[][] mapaNivel0 = {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -26,7 +27,6 @@ public class Nivel {
         { 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1 },
         { 1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-        
     };
 
     private static final int[][] mapaNivel1 = {

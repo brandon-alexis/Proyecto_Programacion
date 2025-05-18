@@ -12,7 +12,7 @@ public class Imagen {
 
     // Metodo para crear imagenes pasandole la ruta
     public static ImageIcon cargar(String url, int ancho, int alto, int scala) {
-        urlImagen = Imagen.class.getResource(String.format("../%s", url));
+        urlImagen = Imagen.class.getResource(String.format("../recursos/imagenes/%s", url));
         imagenOriginal = new ImageIcon(urlImagen);
         Image imagenEscalada = imagenOriginal
             .getImage()

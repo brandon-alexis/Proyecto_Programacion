@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-
 import javax.swing.ImageIcon;
 
 import control.ControlJuego;
@@ -15,8 +14,8 @@ import main.Juego;
 import mapa.Mapa;
 import objetos.Moneda;
 import objetos.Pared;
-import sonido.Sonido;
 import util.Imagen;
+import util.Sonido;
 
 public class Duende {
     public static final int ANCHO = Ventana.TAMAÑO_BLOQUE;
@@ -35,7 +34,6 @@ public class Duende {
     private ImageIcon imagenDerecha;
     private Sonido sonido;
 
-
     private int vidas;
 
     public Duende(int x, int y) {
@@ -45,12 +43,12 @@ public class Duende {
         this.velocidadY = this.VELOCIDAD;
         this.direccionesValidas = List.of("arriba", "abajo", "izquierda", "derecha");
         this.direccion = ControlJuego.DERECHA;
-        this.proximaDireccion = "derecha";
+        this.proximaDireccion = ControlJuego.DERECHA;
         this.vidas = 3;
-        this.imagenArriba = Imagen.cargar("recursos/imagenes/duende/arriba.png", ANCHO, ALTO, 1);
-        this.imagenAbajo = Imagen.cargar("recursos/imagenes/duende/abajo.png", ANCHO, ALTO, 1);
-        this.imagenIzquierda = Imagen.cargar("recursos/imagenes/duende/izquierda.png", ANCHO, ALTO, 1);
-        this.imagenDerecha = Imagen.cargar("recursos/imagenes/duende/derecha.png", ANCHO, ALTO, 1);
+        this.imagenArriba = Imagen.cargar("duende/arriba.png", ANCHO, ALTO, 1);
+        this.imagenAbajo = Imagen.cargar("duende/abajo.png", ANCHO, ALTO, 1);
+        this.imagenIzquierda = Imagen.cargar("duende/izquierda.png", ANCHO, ALTO, 1);
+        this.imagenDerecha = Imagen.cargar("duende/derecha.png", ANCHO, ALTO, 1);
         this.sonido = new Sonido();
     }
 
@@ -59,7 +57,7 @@ public class Duende {
             g.drawImage(this.imagenDerecha.getImage(), this.x, this.y, ANCHO, ALTO, null);
 
         }
-        
+
         if (direccion == ControlJuego.IZQUIERDA) {
             g.drawImage(this.imagenIzquierda.getImage(), this.x, this.y, ANCHO, ALTO, null);
         }
@@ -79,19 +77,12 @@ public class Duende {
 
         if (alineado) {
             int dx = 0, dy = 0;
-            switch (this.proximaDireccion) {
-                case ControlJuego.ARRIBA:
-                    dy = -VELOCIDAD;
-                    break;
-                case ControlJuego.ABAJO:
-                    dy = VELOCIDAD;
-                    break;
-                case ControlJuego.IZQUIERDA:
-                    dx = -VELOCIDAD;
-                    break;
-                case ControlJuego.DERECHA:
-                    dx = VELOCIDAD;
-                    break;
+            
+            switch(this.proximaDireccion) {
+                case ControlJuego.ARRIBA -> dy = -VELOCIDAD;
+                case ControlJuego.ABAJO -> dy = VELOCIDAD;
+                case ControlJuego.IZQUIERDA -> dx = -VELOCIDAD;
+                case ControlJuego.DERECHA -> dx = VELOCIDAD;
             }
 
             this.x += dx;
@@ -155,7 +146,7 @@ public class Duende {
         }
     }
 
-    public void capturar(HashSet<Moneda> monedas) {
+    public void capturarMoneda(HashSet<Moneda> monedas) {
         Iterator<Moneda> it = monedas.iterator();
         while (it.hasNext()) {
             Moneda comida = it.next();
@@ -211,8 +202,6 @@ public class Duende {
     public void perderVida(int[][] mapa) {
         this.vidas--;
         this.cambiarPosicion(mapa);
-        System.out.println("Vidas: " + this.vidas);
-        
     }
 
     public int getX() {
@@ -272,9 +261,7 @@ public class Duende {
     }
 
     public int getVidas() {
-
         return vidas;
-
     }
 
 }

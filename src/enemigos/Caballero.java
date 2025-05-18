@@ -31,10 +31,10 @@ public class Caballero {
         this.y = y;
         this.velocidadX = VELOCIDAD;
         this.velocidadY = VELOCIDAD;
-        this.imagenArriba = Imagen.cargar("recursos/imagenes/caballero/arriba.png", ANCHO, ALTO, 1);
-        this.imagenAbajo = Imagen.cargar("recursos/imagenes/caballero/abajo.png", ANCHO, ALTO, 1);
-        this.imagenIzquierda = Imagen.cargar("recursos/imagenes/caballero/izquierda.png", ANCHO, ALTO, 1);
-        this.imagenDerecha = Imagen.cargar("recursos/imagenes/caballero/derecha.png", ANCHO, ALTO, 1);
+        this.imagenArriba = Imagen.cargar("caballero/arriba.png", ANCHO, ALTO, 1);
+        this.imagenAbajo = Imagen.cargar("caballero/abajo.png", ANCHO, ALTO, 1);
+        this.imagenIzquierda = Imagen.cargar("caballero/izquierda.png", ANCHO, ALTO, 1);
+        this.imagenDerecha = Imagen.cargar("caballero/derecha.png", ANCHO, ALTO, 1);
         this.direccion = ControlJuego.ABAJO;
 
     }
