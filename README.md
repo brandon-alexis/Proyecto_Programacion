@@ -1,18 +1,23 @@
-## Getting Started
+# Laberinto del Honor
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Desarrollo de una juego inspirado en el juego de pacman, donde manejaremos a un duende que tendra el objetivo de recuperar su tesoro en monedas de oro que fue robado por unos caballeros que custodiaran el castillo.
 
-## Folder Structure
+## Tabla de contenido
+- [Requisitos](#requisitos)
+- [Demo](#demo)
 
-The workspace contains two folders by default, where:
+## Requisitos 
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- Java 17 o superior
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Demo
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+![alt text](<Captura de pantalla 2025-05-18 142255.png>)
 
-## Dependency Management
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+
+
+
+
+
+
