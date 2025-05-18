@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -19,6 +20,7 @@ import mapa.Mapa;
 import mapa.Nivel;
 import objetos.Moneda;
 import objetos.Pared;
+import util.Imagen;
 import util.Sonido;
 
 public class Juego extends JPanel implements ActionListener {
@@ -165,14 +167,19 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     public void mostrarPuntaje(Graphics g) {
-        g.fillRect(0, 0, 160, 30);
+        ImageIcon imagenPuntaje = Imagen.cargar("moneda.png", 16 , 16, 3);
+        g.fillRect(0, 0, 120, 30);
+        g.drawImage(imagenPuntaje.getImage(), -10, -12, null);
         g.setColor(Color.WHITE);
-        g.drawString("Puntaje: " + PUNTAJE, 10, 20);
+        g.drawString(String.format("x %d", PUNTAJE), 30, 20);
     }
 
     public void mostrarVidas(Graphics g) {
+        int vidas = this.jugador.getVidas();
+        ImageIcon imagenVida = Imagen.cargar("vida.png", 16, 16, 3);
+        g.drawImage(imagenVida.getImage(), 50, -12, null);
         g.setColor(Color.WHITE);
-        g.drawString("Vidas: " + this.jugador.getVidas(), 90, 20);
+        g.drawString(String.format("x %d", vidas), 90, 20);
     }
 
     private void mostrarMensajeGameOver(Graphics g) {

@@ -3,29 +3,27 @@ package objetos;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.net.URL;
 
 import javax.swing.ImageIcon;
 
+import graficos.Ventana;
+import util.Imagen;
+
 public class Pared {
-    private int ancho;
-    private int alto;
+    private static final int ANCHO = Ventana.TAMAÑO_BLOQUE;
+    private static final int ALTO = Ventana.TAMAÑO_BLOQUE;
     private int x;
     private int y;
     private ImageIcon imagenPared;
-    private URL urlPared;
     
     public Pared(int x, int y, int ancho, int alto) {
         this.x = x;
         this.y = y;        
-        this.ancho = ancho;
-        this.alto = alto;
-        this.urlPared = Pared.class.getResource("../recursos/imagenes/pared.png");
-        this.imagenPared = new ImageIcon(urlPared);
+        this.imagenPared = Imagen.cargar("pared.png", ANCHO, ALTO, 1);
     }
     
     public void dibujar(Graphics g) {
-        g.drawImage(imagenPared.getImage(), this.x, this.y, ancho, alto, null);
+        g.drawImage(imagenPared.getImage(), this.x, this.y, ANCHO, ALTO, null);
         g.setColor(Color.BLACK);
     }
 
@@ -34,19 +32,12 @@ public class Pared {
     }
 
     public int getAncho() {
-        return ancho;
+        return ANCHO;
     }
 
-    public void setAncho(int ancho) {
-        this.ancho = ancho;
-    }
 
     public int getAlto() {
-        return alto;
-    }
-
-    public void setAlto(int alto) {
-        this.alto = alto;
+        return ALTO;
     }
 
     public int getX() {

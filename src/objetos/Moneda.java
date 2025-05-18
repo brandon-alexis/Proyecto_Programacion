@@ -2,11 +2,9 @@ package objetos;
 
 
 import java.awt.Graphics;
-import java.awt.Image;
 
 import graficos.Ventana;
-
-import java.net.URL;
+import util.Imagen;
 
 import javax.swing.ImageIcon;
 
@@ -14,9 +12,7 @@ import javax.swing.ImageIcon;
 public class Moneda {
     private int x;
     private int y;
-    private ImageIcon imagenOriginalMoneda;
     private ImageIcon imagenMoneda;
-    private URL urlMoneda;
 
     // Tamaño de la comida
     public static final int ANCHO = Ventana.TAMAÑO_BLOQUE / 2; // 32
@@ -27,10 +23,7 @@ public class Moneda {
     public Moneda(int x, int y) {
         this.x = x;
         this.y = y;
-        this.urlMoneda = Moneda.class.getResource("../recursos/imagenes/moneda.png");
-        this.imagenOriginalMoneda = new  ImageIcon(urlMoneda);
-        Image imagenEscalada = imagenOriginalMoneda.getImage().getScaledInstance(ANCHO * 3, ALTO * 3, Image.SCALE_SMOOTH);
-        this.imagenMoneda = new ImageIcon(imagenEscalada);
+        this.imagenMoneda = Imagen.cargar("moneda.png", ANCHO, ALTO, 3);
     }
 
     public void dibujar(Graphics g) {
