@@ -1,7 +1,7 @@
 package mapa;
 
 public class Nivel {
-    private static int nivelActual = 3;
+    private static int nivelActual = 0;
     public static final int NIVEL_MAXIMO = 3; 
 
     private static final int[][] mapaNivel0 = {
