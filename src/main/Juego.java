@@ -75,8 +75,9 @@ public class Juego extends JPanel implements ActionListener {
             detenerJuegoGanar(g);
         } 
 
+
         if (this.monedas.isEmpty() && Nivel.getNivel() == Nivel.NIVEL_MAXIMO) {
-             mostrarMensajeGanar(g);
+             System.exit(0);
         }
     }
 
