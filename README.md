@@ -10,9 +10,7 @@ Desarrollo de una juego inspirado en el juego de pacman, donde manejaremos a un 
 
 - Java 17 o superior
 
-## Demo
 
-![alt text](<Captura de pantalla 2025-05-18 142255.png>)
 
 
 
