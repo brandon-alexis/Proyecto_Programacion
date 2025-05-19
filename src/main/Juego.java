@@ -73,6 +73,10 @@ public class Juego extends JPanel implements ActionListener {
         if (this.monedas.isEmpty() && Nivel.getNivel() < Nivel.NIVEL_MAXIMO) {
             mostrarMensajeGanar(g);
             detenerJuegoGanar(g);
+        } 
+
+        if (this.monedas.isEmpty() && Nivel.getNivel() == Nivel.NIVEL_MAXIMO) {
+             mostrarMensajeGanar(g);
         }
     }
 
@@ -127,7 +131,7 @@ public class Juego extends JPanel implements ActionListener {
         if (opcion == JOptionPane.YES_OPTION) {
             PUNTAJE = 0;
             Nivel.pasarNivel();
-            this.mapa.cargarMapa();
+            this.mapa = new Mapa();
             this.jugador = mapa.getJugador();
             this.paredes = mapa.getParedes();
             this.monedas = mapa.getMonedas();
