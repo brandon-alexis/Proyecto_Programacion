@@ -13,7 +13,7 @@ public class Ventana extends JFrame {
     public static final int ALTO = CANTIDAD_FILAS * TAMAÑO_BLOQUE;
     public static final int FRAME = 16;
     public static final int FPS = FRAME / 1000;
-    public static final String TITULO = "Juego";
+    public static final String TITULO = "Laberinto del Honor";
     private Juego juego;
     
     public Ventana() {

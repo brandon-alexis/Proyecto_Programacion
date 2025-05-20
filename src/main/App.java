@@ -8,10 +8,6 @@ public class App {
     public App() {
         this.ventana = new Ventana();
         this.ventana.setVisible(true);
-
-        
-        
-        
     }
     public static void main(String[] args) throws Exception {
         new App();
