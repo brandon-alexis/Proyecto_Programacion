@@ -2,8 +2,13 @@ package graficos;
 
 
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import main.Juego;
+import util.Imagen;
 
 public class Ventana extends JFrame {
     public static final int CANTIDAD_FILAS = 22;
@@ -14,6 +19,7 @@ public class Ventana extends JFrame {
     public static final int FRAME = 16;
     public static final int FPS = FRAME / 1000;
     public static final String TITULO = "Laberinto del Honor";
+    public static ImageIcon icono;
     private Juego juego;
     
     public Ventana() {
@@ -22,6 +28,8 @@ public class Ventana extends JFrame {
    }
 
    private void configurarVentana() {
+    this.icono = Imagen.cargar("icono.png", 64, 64, 1);
+    this.setIconImage(this.icono.getImage());
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setSize(new Dimension(ANCHO, ALTO));
     this.setResizable(false);
