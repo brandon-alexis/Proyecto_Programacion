@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.util.HashSet;
 
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -24,7 +23,7 @@ import util.Imagen;
 import util.Sonido;
 
 public class Juego extends JPanel implements ActionListener {
-    public static int PUNTAJE;
+    public static int puntaje;
     private Mapa mapa;
     private Duende jugador;
     private Timer timer;
@@ -32,18 +31,22 @@ public class Juego extends JPanel implements ActionListener {
     private HashSet<Pared> paredes;
     private HashSet<Moneda> monedas;
     private Sonido sonido;
+    public final int ESTADO_JUEGO_JUGANDO = 0;
+    public final int ESTADO_JUEGO_GANAR = 1;
+    public final int ESTADO_JUEGO_PERDER = 2;
+    public int estadoJuego;
 
     public Juego() {
         this.mapa = new Mapa();
         this.jugador = mapa.getJugador();
         this.paredes = mapa.getParedes();
         this.monedas = mapa.getMonedas();
-        this.control = new ControlJuego();
+        this.control = new ControlJuego(this);
         this.timer = new Timer(Ventana.FRAME, this);
         this.sonido = new Sonido();
-        ;
+        this.estadoJuego = ESTADO_JUEGO_JUGANDO;
 
-        PUNTAJE = 0;
+        puntaje = 0;
         timer.start();
 
         this.setPreferredSize(new Dimension(Ventana.ALTO, Ventana.ANCHO));
@@ -59,32 +62,25 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     public void dibujar(Graphics g) {
-        this.dibujarFondo(g);
-        this.mapa.dibujar(g);
-        this.jugador.dibujar(g);
-        this.mostrarPuntaje(g);
-        this.mostrarVidas(g);
+        dibujarFondo(g);
+        mapa.dibujar(g);
+        jugador.dibujar(g);
+        mostrarPuntaje(g);
+        mostrarVidas(g);
 
-        if (this.jugador.getVidas() <= 0) {
-            this.mostrarMensajeGameOver(g);
-            this.detenerJuegoPerder();
-        }
-
-        if (this.monedas.isEmpty() && Nivel.getNivel() < Nivel.NIVEL_MAXIMO) {
+        if (estadoJuego == ESTADO_JUEGO_PERDER) {
+            mostrarMensajeGameOver(g);
+        } else if (estadoJuego == ESTADO_JUEGO_GANAR) {
             mostrarMensajeGanar(g);
-            detenerJuegoGanar(g);
-        } 
-
-
-        if (this.monedas.isEmpty() && Nivel.getNivel() == Nivel.NIVEL_MAXIMO) {
-             System.exit(0);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.actualizar();
-        this.repaint();
+        if (estadoJuego == ESTADO_JUEGO_JUGANDO) {
+            this.actualizar();
+            this.repaint();
+        }
     }
 
     private void dibujarFondo(Graphics g) {
@@ -117,66 +113,33 @@ public class Juego extends JPanel implements ActionListener {
             }
         }
 
-        this.repaint();
-    }
-
-    private void detenerJuegoGanar(Graphics g) {
-        this.timer.stop();
-
-        int opcion = JOptionPane.showConfirmDialog(
-                this,
-                "¿Quieres jugar el siguient nivel?",
-                "Game Over",
-                JOptionPane.YES_NO_OPTION);
-
-        if (opcion == JOptionPane.YES_OPTION) {
-            PUNTAJE = 0;
-            Nivel.pasarNivel();
-            this.mapa = new Mapa();
-            this.jugador = mapa.getJugador();
-            this.paredes = mapa.getParedes();
-            this.monedas = mapa.getMonedas();
-            this.timer.start();
-        } else {
-            System.exit(0);
+        if (this.jugador.getVidas() <= 0) {
+            this.estadoJuego = ESTADO_JUEGO_PERDER;
+            this.timer.stop();
+            reproducirSonidoGameOver();
         }
 
-    }
+        if (this.monedas.isEmpty() && Nivel.getNivel() < Nivel.NIVEL_MAXIMO) {
+            this.estadoJuego = ESTADO_JUEGO_GANAR;
+            this.timer.stop();
+            reproducirSonidoGanar();
+        }
 
-    public void detenerJuegoPerder() {
-        this.timer.stop();
-
-        int opcion = JOptionPane.showConfirmDialog(
-                this,
-                "¿Quieres volver a jugar?",
-                "Game Over",
-                JOptionPane.YES_NO_OPTION);
-
-        if (opcion == JOptionPane.YES_OPTION) {
-            PUNTAJE = 0;
-            this.mapa = new Mapa();
-            this.mapa.cargarMapa();
-            this.jugador = mapa.getJugador();
-            this.jugador.setVidas(3);
-            this.paredes = mapa.getParedes();
-            this.monedas = mapa.getMonedas();
-            this.timer.restart();
-            this.repaint();
-        } else {
+        if (this.monedas.isEmpty() && Nivel.getNivel() == Nivel.NIVEL_MAXIMO) {
             System.exit(0);
         }
     }
 
     public static void incrementarPuntaje() {
-        PUNTAJE++;
+        puntaje++;
     }
 
     public void mostrarPuntaje(Graphics g) {
-        ImageIcon imagenPuntaje = Imagen.cargar("moneda.png", 16 , 16, 3);
+        ImageIcon imagenPuntaje = Imagen.cargar("moneda.png", 16, 16, 3);
         g.fillRect(0, 0, 120, 30);
         g.drawImage(imagenPuntaje.getImage(), -10, -12, null);
         g.setColor(Color.WHITE);
-        g.drawString(String.format("x %d", PUNTAJE), 30, 20);
+        g.drawString(String.format("x %d", puntaje), 30, 20);
     }
 
     public void mostrarVidas(Graphics g) {
@@ -188,12 +151,14 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     private void mostrarMensajeGameOver(Graphics g) {
-        if (this.jugador.getVidas() <= 0) {
-            g.setFont(g.getFont().deriveFont(80f));
-            g.setColor(Color.red);
-            g.drawString("GAME OVER", Ventana.ANCHO / 2 - 250, Ventana.ALTO / 2);
-            reproducirSonidoGameOver();
-        }
+        g.setColor(new Color(0, 0, 0, 180));
+        g.fillRect(0, 0, Ventana.ANCHO, Ventana.ALTO);
+        g.setFont(g.getFont().deriveFont(80f));
+        g.setColor(Color.RED);
+        g.drawString("GAME OVER", Ventana.ANCHO / 2 - 250, Ventana.ALTO / 2);
+        g.setFont(g.getFont().deriveFont(30f));
+        g.drawString("Presiona R para reiniciar o Q para salir", Ventana.ANCHO / 2 - 250, Ventana.ALTO / 2 + 50);;
+        reproducirSonidoGameOver();
     }
 
     private void reproducirSonidoGameOver() {
@@ -203,18 +168,46 @@ public class Juego extends JPanel implements ActionListener {
     }
 
     private void mostrarMensajeGanar(Graphics g) {
-        if (this.monedas.isEmpty()) {
-            g.setFont(g.getFont().deriveFont(80f));
-            g.setColor(Color.green);
-            g.drawString("GANASTE", Ventana.ANCHO / 2 - 200, Ventana.ALTO / 2);
-            reproducirSonidoGanar();
-        }
+        g.setColor(new Color(0, 0, 0, 180));
+        g.fillRect(0, 0, Ventana.ANCHO, Ventana.ALTO);
+        g.setFont(g.getFont().deriveFont(80f));
+        g.setColor(Color.green);
+        g.drawString("¡GANASTE!", Ventana.ANCHO / 2 - 200, Ventana.ALTO / 2);
+        g.setFont(g.getFont().deriveFont(30f));
+        g.drawString("Presiona Enter para continuar o Q para salir", Ventana.ANCHO / 2 - 280,
+                Ventana.ALTO / 2 + 50);
+        reproducirSonidoGanar();
     }
 
     private void reproducirSonidoGanar() {
         this.sonido.detenerSonido("juego");
         this.sonido.reproducirSonido("ganar_juego");
         this.sonido.setVolumen("ganar_juego", 0.7f);
+    }
+
+    public void reiniciarNivel() {
+        puntaje = 0;
+        this.mapa = new Mapa();
+        this.mapa.cargarMapa();
+        this.jugador = mapa.getJugador();
+        this.jugador.setVidas(3);
+        this.paredes = mapa.getParedes();
+        this.monedas = mapa.getMonedas();
+        this.estadoJuego = ESTADO_JUEGO_JUGANDO;
+        this.timer.restart();
+        this.repaint();
+    }
+
+    public void pasarAlSiguienteNivel() {
+        puntaje = 0;
+        Nivel.pasarNivel();
+        this.mapa = new Mapa();
+        this.jugador = mapa.getJugador();
+        this.paredes = mapa.getParedes();
+        this.monedas = mapa.getMonedas();
+        this.estadoJuego = ESTADO_JUEGO_JUGANDO;
+        this.timer.start();
+        this.repaint();
     }
 
 }
