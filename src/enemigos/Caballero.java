@@ -1,7 +1,6 @@
 package enemigos;
 
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import javax.swing.ImageIcon;
 
@@ -40,20 +39,20 @@ public class Caballero {
     }
 
     public void dibujar(Graphics g) {
-        if (direccion == ControlJuego.DERECHA) {
+        if (direccion.equals(ControlJuego.DERECHA)) {
             g.drawImage(this.imagenDerecha.getImage(), this.x, this.y, ANCHO, ALTO, null);
 
         }
 
-        if (direccion == ControlJuego.IZQUIERDA) {
+        if (direccion.equals(ControlJuego.IZQUIERDA)) {
             g.drawImage(this.imagenIzquierda.getImage(), this.x, this.y, ANCHO, ALTO, null);
         }
 
-        if (direccion == ControlJuego.ARRIBA) {
+        if (direccion.equals(ControlJuego.ARRIBA)) {
             g.drawImage(this.imagenArriba.getImage(), this.x, this.y, ANCHO, ALTO, null);
         }
 
-        if (direccion == ControlJuego.ABAJO) {
+        if (direccion.equals(ControlJuego.ABAJO)) {
             g.drawImage(this.imagenAbajo.getImage(), this.x, this.y, ANCHO, ALTO, null);
         }
 
@@ -62,27 +61,6 @@ public class Caballero {
     public void mover(int dx, int dy) {
         this.x += dx;
         this.y += dy;
-    }
-
-    public void manejarTeclas(int keyCode) {
-        switch (keyCode) {
-            case KeyEvent.VK_UP:
-                mover(0, -Ventana.TAMAÑO_BLOQUE);
-                direccion = ControlJuego.ARRIBA;
-                break;
-            case KeyEvent.VK_DOWN:
-                mover(0, Ventana.TAMAÑO_BLOQUE);
-                direccion = ControlJuego.ABAJO;
-                break;
-            case KeyEvent.VK_LEFT:
-                mover(-Ventana.TAMAÑO_BLOQUE, 0);
-                direccion = ControlJuego.IZQUIERDA;
-                break;
-            case KeyEvent.VK_RIGHT:
-                mover(Ventana.TAMAÑO_BLOQUE, 0);
-                direccion = ControlJuego.DERECHA;
-                break;
-        }
     }
 
     public boolean detectarColisionPared(int nuevoX, int nuevoY, HashSet<Pared> paredes) {
